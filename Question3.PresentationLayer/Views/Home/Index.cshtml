@@ -1,4 +1,6 @@
-﻿@using Question3.PresentationLayer.Views.Shared.Components.FormComponent
+﻿@using Question3.Models.DataTransferObjects
+@using Question3.PresentationLayer.Views.Shared.Components.FormComponent
+@using Question3.PresentationLayer.Views.Shared.Components.TableComponent
 @model ClientsViewModel;
 @{
     ViewData["Title"] = "Home Page";
@@ -8,20 +10,40 @@
     @(await Component.InvokeAsync(
         nameof(FormComponent), 
         new {
-            inputFields = Model.searchFields,
-            colClass="col-4",
-            submitButtonText = "Filter"
+            options = Model.SearchFormComponentViewModel
         }))
 </div>
 <div class="card bg-light my-2">
     <div class="card-header">
         <div class="d-flex">
-            <button class="btn btn-outline-primary">
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#new-client-modal">
                 New
             </button>
         </div>
     </div>
     <div class="card-body">
+        @(await Component.InvokeAsync(nameof(TableComponent), new {options = Model.TableConfig}))
+    </div>
+</div>
 
+<div class="modal fade" tabindex="-1" role="dialog" id="new-client-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Client</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  
+                </button>
+            </div>
+            <div class="modal-body">
+                @(await Component.InvokeAsync(
+                    nameof(FormComponent),
+                    new
+                    {
+                        options = Model.NewClientFormViewModel
+                    })
+                )
+            </div>
+        </div>
     </div>
 </div>

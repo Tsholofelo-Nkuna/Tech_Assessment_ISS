@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Question3.BusinessLogicLayer;
+using Question3.DataAccessLayer;
+
 namespace Question3.PresentationLayer
 {
     public class Program
@@ -7,6 +11,11 @@ namespace Question3.PresentationLayer
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<WebDbContext>(config =>
+            {
+                config.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+            });
+            builder.Services.AddBusinessServices();
             builder.Services.AddControllersWithViews();
             builder.Services.AddServerSideBlazor();
             var app = builder.Build();

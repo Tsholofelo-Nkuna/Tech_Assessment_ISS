@@ -11,6 +11,6 @@ namespace Question3.BusinessLogicLayer.Interfaces
 {
     public interface IClientService : IGenericService<ClientDto, ClientEntity>
     {
-
+        public IEnumerable<ClientDto> Get(ClientDto filter);
     }
 }

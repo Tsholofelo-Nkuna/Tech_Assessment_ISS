@@ -10,6 +10,6 @@ namespace Question3.Models.DataTransferObjects.Base
     {
         public Guid Id { get; set; }
         public bool Archived { get; set; }
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime? CreatedOn { get; set; }
     }
 }

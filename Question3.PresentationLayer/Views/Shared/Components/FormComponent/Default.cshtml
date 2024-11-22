@@ -1,42 +1,45 @@
 ﻿@model FormComponentViewModel
-<div class="card">
+<form class="card" asp-action="@Model.ActionName" asp-asp-controller="@Model.ControllerName" method="@Model.HttpMethod">
     <div class="card-body">
-        <form>
-            <div class="row gx-5 gy-3">
-                @foreach (var field in Model.Fields)
-                {
-                    <div class="@Model.ColClass">
+        <div class="row gx-5 gy-3">
+            @foreach (var field in Model.Fields)
+            {
+                <div class="@Model.ColClass">
 
-                        @switch (field.ControlType)
-                        {
-                            case ControlType.Input:
+                    @switch (field.ControlType)
+                    {
+                        case ControlType.Input:
 
-                                <div class="row">
-                                    <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
-                                    <div class="col"> <input class="form-control" name="@field.Name" /></div>
-                                </div>
+                            <div class="row">
+                                <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
+                                <div class="col"> <input class="form-control" name="@field.Name" value="@Model.GetValue(field.Name)" /></div>
+                            </div>
 
-                                break;
-                            case ControlType.Checkbox:
+                            break;
+                        case ControlType.Checkbox:
 
-                                <div class="row">
-                                    <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
-                                    <div class="col-auto text-start"> <input type="checkbox" class="form-check-input" name="@field.Name" /></div>
-                                </div>
+                            <div class="row">
+                                <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
+                                @if(Model.GetValue(field.Name) == bool.TrueString)
+                                {
+                                    <div class="col-auto text-start"> <input checked type="checkbox" class="form-check-input" name="@field.Name" value="@bool.TrueString" /></div>
+                                }
+                                else
+                                {
+                                    <div class="col-auto text-start"> <input type="checkbox" class="form-check-input" name="@field.Name" value="@bool.TrueString" /></div>
+                                }
+                               
+                            </div>
 
-                                break;
+                            break;
 
-                        }
-                    </div>
-                }
+                    }
+                </div>
+            }
 
-            </div>
-
-        </form>
-    </div>
-    <div class="card-footer">
-        <div class="d-flex">
-            <button class="btn btn-primary" type="submit">@Model.SubmitButtonText</button>
         </div>
     </div>
-</div>
+    <div class="card-footer">
+        <button class="btn btn-primary" type="submit">@Model.SubmitButtonText</button>
+    </div>
+</form>

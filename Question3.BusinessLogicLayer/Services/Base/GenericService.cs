@@ -17,7 +17,7 @@ namespace Question3.BusinessLogicLayer.Services.Base
     public class GenericService<TDto, TEntity> : IGenericService<TDto, TEntity> where TEntity : BaseEntity where TDto : BaseDto
     {
         protected readonly WebDbContext _dbContext;
-        private readonly DbSet<TEntity> _entitySet;
+        protected readonly DbSet<TEntity> _entitySet;
         protected readonly IMapper mapper;
         public GenericService(WebDbContext dbContext)
         {
@@ -37,7 +37,7 @@ namespace Question3.BusinessLogicLayer.Services.Base
 
         public virtual async Task<IEnumerable<TDto>> Get(Expression<Func<TEntity, bool>> filter)
         {
-            var list = await _entitySet.Where(filter).ToListAsync();
+            var list = await _entitySet.Where(filter).AsNoTracking().OrderByDescending(x=> x.CreatedOn).ToListAsync();
             return mapper.Map<List<TDto>>(list);
         }
 

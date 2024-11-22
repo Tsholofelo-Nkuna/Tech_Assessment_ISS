@@ -5,10 +5,10 @@ namespace Question3.PresentationLayer.Views.Shared.Components.FormComponent
 {
     public class FormComponent: ViewComponent
     {
-        public Task<IViewComponentResult> InvokeAsync(List<InputFieldViewModel> inputFields, string colClass, string submitButtonText)
+        public Task<IViewComponentResult> InvokeAsync(FormComponentViewModel options)
         {
           
-            return Task.FromResult<IViewComponentResult>(View(new FormComponentViewModel { ColClass = colClass, Fields = inputFields, SubmitButtonText = submitButtonText}));
+            return Task.FromResult<IViewComponentResult>(View(options));
         }
     }
 }
