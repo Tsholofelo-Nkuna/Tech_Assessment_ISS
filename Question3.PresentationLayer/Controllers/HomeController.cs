@@ -13,9 +13,10 @@ namespace Question3.PresentationLayer.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromForm] ClientsViewModel viewModel)
         {
-            return View();
+
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

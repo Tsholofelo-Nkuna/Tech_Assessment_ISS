@@ -8,7 +8,7 @@ namespace Question3.PresentationLayer
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddServerSideBlazor();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,7 +29,7 @@ namespace Question3.PresentationLayer
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            app.MapBlazorHub();
             app.Run();
         }
     }

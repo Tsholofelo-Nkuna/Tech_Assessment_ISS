@@ -1,8 +1,27 @@
-﻿@{
+﻿@using Question3.PresentationLayer.Views.Shared.Components.FormComponent
+@model ClientsViewModel;
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    @(await Component.InvokeAsync(
+        nameof(FormComponent), 
+        new {
+            inputFields = Model.searchFields,
+            colClass="col-4",
+            submitButtonText = "Filter"
+        }))
+</div>
+<div class="card bg-light my-2">
+    <div class="card-header">
+        <div class="d-flex">
+            <button class="btn btn-outline-primary">
+                New
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+
+    </div>
 </div>

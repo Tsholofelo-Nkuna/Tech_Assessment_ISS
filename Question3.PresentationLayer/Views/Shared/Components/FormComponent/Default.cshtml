@@ -1,0 +1,42 @@
+﻿@model FormComponentViewModel
+<div class="card">
+    <div class="card-body">
+        <form>
+            <div class="row gx-5 gy-3">
+                @foreach (var field in Model.Fields)
+                {
+                    <div class="@Model.ColClass">
+
+                        @switch (field.ControlType)
+                        {
+                            case ControlType.Input:
+
+                                <div class="row">
+                                    <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
+                                    <div class="col"> <input class="form-control" name="@field.Name" /></div>
+                                </div>
+
+                                break;
+                            case ControlType.Checkbox:
+
+                                <div class="row">
+                                    <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
+                                    <div class="col-auto text-start"> <input type="checkbox" class="form-check-input" name="@field.Name" /></div>
+                                </div>
+
+                                break;
+
+                        }
+                    </div>
+                }
+
+            </div>
+
+        </form>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex">
+            <button class="btn btn-primary" type="submit">@Model.SubmitButtonText</button>
+        </div>
+    </div>
+</div>
