@@ -34,17 +34,20 @@ EndDate DateTime
 );
 
 Create Table X_StudentCourses(
+  Id bigint Primary Key Identity(1,1),
   StudentId bigint Foreign Key References Students(Id),
   CourseId bigint Foreign Key References Courses(Id)
 )
 
 Create Table X_StudentCourseResults(
+ Id bigint Primary Key Identity(1,1),
  StudendId bigint Foreign Key References Students(Id),
  CourseId bigint Foreign Key References Courses(Id),
  Competent bit not null default(0)
 )
 
 Create Table CourseCertificate(
+  Id bigint Primary Key Identity(1,1),
   DateIssued DateTime,
   ExpirationDate DateTime,
   IssuedTo bigint Foreign Key References Students(Id),
