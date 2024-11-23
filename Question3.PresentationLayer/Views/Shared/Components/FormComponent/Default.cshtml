@@ -1,9 +1,12 @@
 ﻿@model FormComponentViewModel
 <form class="card" asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" method="@Model.HttpMethod">
     @{
-        foreach(var formStateKeyVal in Model.FormStateAsKeyValuePair().Where(kv => !Model.Fields.Any(field => kv.Key == field.Name)))
+        if (Model.IncludeFormStatePropsAsHiddent)
         {
-            <input type="hidden" name="@formStateKeyVal.Key" value="@formStateKeyVal.Value" />
+            foreach (var formStateKeyVal in Model.FormStateAsKeyValuePair().Where(kv => !Model.Fields.Any(field => kv.Key == field.Name)))
+            {
+                <input type="hidden" name="@formStateKeyVal.Key" value="@formStateKeyVal.Value" />
+            }
         }
     }
     <div class="card-body">

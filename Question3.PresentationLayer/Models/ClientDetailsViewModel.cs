@@ -16,6 +16,8 @@ namespace Question3.PresentationLayer.Models
             this.DetailsFormViewModel.FormState = this.ClientDto;
             this.DetailsFormViewModel.CollapseFooter = false;
             this.PrimaryContactPersonFormViewModel.CollapseFooter = false;
+            this.PrimaryContactPersonFormViewModel.IncludeFormStatePropsAsHiddent = true;
+            this.DetailsFormViewModel.IncludeFormStatePropsAsHiddent = true;
             var primaryContact = this.ClientDto.ContactPerson
                 .Where(x => x.IsPrimaryContact).FirstOrDefault();
             if(primaryContact is ContactPersonDto contactPersonDto)

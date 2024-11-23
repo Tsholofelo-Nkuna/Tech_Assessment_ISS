@@ -15,6 +15,7 @@ namespace Question3.PresentationLayer.Models
         public string HttpMethod { get; set; } = HttpMethods.Post;
         public bool CollapseFooter { get; set; } = false;
         public BaseDto FormState { get; set; } = new BaseDto();
+        public bool IncludeFormStatePropsAsHiddent {  get; set; }
         public string GetValue(string propName)
         {
            return this.FormState?.GetType().GetProperty(propName)?.GetValue(this.FormState)?.ToString() ?? string.Empty;

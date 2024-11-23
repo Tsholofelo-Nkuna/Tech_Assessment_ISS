@@ -79,14 +79,13 @@
 
          if(isValid){
                 const url = '@(Url.ActionLink(nameof(HomeController.AddOrUpdate), "Home"))';
-                console.log(url);
+              
                 fetch(url, {
                     method: "post",
                     body: form
-                }).then( response => {
-                  //  var html = await response.text();
-                   // document.write(html);
-                    
+                }).then(async response => {
+                    const html = await response.text();
+                    document.write(html);
                 });
          }else{
              formElements.forEach(e => e.classList.add("was-validated"));

@@ -56,9 +56,7 @@ namespace Question3.PresentationLayer.Controllers
             try
             {
                 await this._clientService.Delete(new List<Guid> { id });
-                var vModel = new ClientsViewModel();
-                vModel.TableConfig.Data = (await _clientService.Get(x => !x.Archived)).Select(x => (dynamic)x).ToList();
-                return View(nameof(Index), vModel);
+                return Redirect(Request.Headers.Referer!);
             }
             catch (Exception ex)
             {
@@ -95,7 +93,7 @@ namespace Question3.PresentationLayer.Controllers
                 var success = await this._clientService.Archive(new List<Guid> { id });
                 var vModel = new ClientsViewModel();
                 vModel.TableConfig.Data = (await _clientService.Get(x => !x.Archived)).Select(x => (dynamic)x).ToList();
-                return View(nameof(Index), vModel);
+                return Redirect(this.Request.Headers.Referer!);
             }
             catch (Exception ex)
             {
