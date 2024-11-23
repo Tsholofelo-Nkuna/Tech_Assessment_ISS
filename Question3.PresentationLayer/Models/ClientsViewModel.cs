@@ -43,6 +43,9 @@ namespace Question3.PresentationLayer.Models
             DeleteController = "Home",
             ArchiveAction = nameof(HomeController.Archive),
             ArchiveController = "Home",
+            ViewAction = nameof(HomeController.Details),
+            ViewController = "Home",
+            
         };
 
         public FormComponentViewModel NewClientFormViewModel { get; set; } = new()
@@ -54,33 +57,70 @@ namespace Question3.PresentationLayer.Models
                 {
                     Label = "Company Name",
                     Name = nameof(ClientDto.CompanyName),
+                    Required = true,
                 },
                 new InputFieldViewModel()
                 {
                     Label = "Trading As",
                     Name = nameof(ClientDto.TradingAs),
+                    Required = true,
                 },
                 new InputFieldViewModel()
                 {
                     Label = "Landline No",
                     Name = nameof(ClientDto.LandlineNumber),
+                    Required = true,
                 },
                 new InputFieldViewModel()
                 {
                     Label = "Province",
                     Name = nameof(ClientDto.Province),
+                    Required = true,
                 },
                 new InputFieldViewModel()
                 {
                     Label = "Address",
                     Name = nameof(ClientDto.Address),
+                    Required = true,
                 }
             },
             ColClass = "col-12",
-            ActionName = nameof(HomeController.AddOrCreate),
+            ActionName = nameof(HomeController.AddOrUpdate),
             ControllerName = "Home",
             HttpMethod = HttpMethods.Post,
-            FormState = new ClientDto()
+            FormState = new ClientDto(),
+            CollapseFooter = true,
+        };
+        public FormComponentViewModel PrimaryContactFormViewModel { get; set; } = new()
+        {
+            Fields = new()
+            {
+
+                new InputFieldViewModel()
+                {
+                    Label = "Name",
+                    Name = nameof(ClientDto.PrimaryContactName),
+                    Required = true,
+                },
+                new InputFieldViewModel()
+                {
+                    Label = "Email",
+                    Name = nameof(ClientDto.PrimaryContactEmail),
+                    Required = true,
+                },
+                new InputFieldViewModel()
+                {
+                    Label = "Contact",
+                    Name = nameof(ClientDto.PrimaryContactPhone),
+                    Required = true,
+                }
+            },
+            ColClass = "col-12",
+            ActionName = nameof(HomeController.AddOrUpdate),
+            ControllerName = "Home",
+            HttpMethod = HttpMethods.Post,
+            FormState = new ClientDto(),
+            CollapseFooter = true,
         };
     }
 }

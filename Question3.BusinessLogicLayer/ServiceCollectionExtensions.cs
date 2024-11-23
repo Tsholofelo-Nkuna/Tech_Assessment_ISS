@@ -13,6 +13,7 @@ namespace Question3.BusinessLogicLayer
     {
        public static IServiceCollection AddBusinessServices(this IServiceCollection services) {
            return services
+                .AddAutoMapper(typeof(AutoMapperConfig))
                 .AddScoped<IClientService, ClientService> ();
           
         }

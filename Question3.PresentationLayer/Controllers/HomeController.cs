@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Question3.BusinessLogicLayer;
 using Question3.BusinessLogicLayer.Interfaces;
 using Question3.Models.DataTransferObjects;
 using Question3.PresentationLayer.Models;
@@ -18,51 +19,89 @@ namespace Question3.PresentationLayer.Controllers
 
         public Task<IActionResult> Index([FromQuery] ClientDto filters)
         {
-            var viewModel = new ClientsViewModel();
-            viewModel.SearchFormComponentViewModel.FormState = filters;
-            viewModel.TableConfig.data =  (_clientService.Get(filters)).Select(x => (dynamic)x).ToList(); 
-            return Task.FromResult<IActionResult>(View(viewModel));
+            try
+            {
+                var viewModel = new ClientsViewModel();
+                viewModel.SearchFormComponentViewModel.FormState = filters;
+                viewModel.TableConfig.Data = (_clientService.Get(filters)).Select(x => (dynamic)x).ToList();
+                return Task.FromResult<IActionResult>(View(viewModel));
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, $"Input\n: {filters.ToJsonString()}");
+                throw;
+            }
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> AddOrCreate([FromForm] ClientDto client)
+        public async Task<IActionResult> AddOrUpdate([FromForm] ClientDto client)
         {
-            if(client.Id != Guid.Empty)
+            try
             {
-                await this._clientService.Update(new () { client });
+                var success = await this._clientService.AddOrUpdate(client);
+                return Redirect(this.Request.Headers.Referer!);
             }
-            else
+            catch (Exception ex)
             {
-                await this._clientService.Insert(new() { client });
+                this._logger.LogError(ex, $"Input\n: {client.ToJsonString()}");
+                throw;
             }
-            var results =  (await _clientService.Get(x => !x.Archived)).Select(x => (dynamic)x).ToList();
-            var vModel = new ClientsViewModel();
-            vModel.TableConfig.data = results;
-            return View(nameof(Index),vModel);
         }
 
 
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            
-            await this._clientService.Delete(new List<Guid>{ id});
-            var vModel = new ClientsViewModel();
-            vModel.TableConfig.data = (await _clientService.Get(x => !x.Archived)).Select(x => (dynamic)x).ToList();
-            return View(nameof(Index),vModel);
+
+            try
+            {
+                await this._clientService.Delete(new List<Guid> { id });
+                var vModel = new ClientsViewModel();
+                vModel.TableConfig.Data = (await _clientService.Get(x => !x.Archived)).Select(x => (dynamic)x).ToList();
+                return View(nameof(Index), vModel);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, $"Input\n: {id.ToJsonString()}");
+                throw;
+            }
+        
+        }
+
+        [HttpGet("[action]/{Id}")]
+        public async Task<IActionResult> Details(Guid Id)
+        {
+            try
+            {
+               var client = (await this._clientService.Get(x => x.Id == Id)).FirstOrDefault();
+               var vModel = new ClientDetailsViewModel(client ?? new ClientDto());
+               if(client is ClientDto clientDto)
+                {
+                    vModel.ClientDto = clientDto;
+                }
+               return View(vModel);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, $"input:\n {Id.ToJsonString()}");
+                throw;
+            }
         }
 
         public async Task<IActionResult> Archive([FromRoute] Guid id)
         {
-            var toBeArchived = (await this._clientService.Get(x => !x.Archived && x.Id == id)).Select(x =>
+            try
             {
-                x.Archived = true;
-                return x;
-            }).ToList();
-            await this._clientService.Update(toBeArchived);
-            var vModel = new ClientsViewModel();
-            vModel.TableConfig.data = (await _clientService.Get(x => !x.Archived)).Select(x => (dynamic)x).ToList();
-            return View(nameof(Index),vModel);
+                var success = await this._clientService.Archive(new List<Guid> { id });
+                var vModel = new ClientsViewModel();
+                vModel.TableConfig.Data = (await _clientService.Get(x => !x.Archived)).Select(x => (dynamic)x).ToList();
+                return View(nameof(Index), vModel);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, $"Input\n: {id.ToJsonString()}");
+                throw;
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

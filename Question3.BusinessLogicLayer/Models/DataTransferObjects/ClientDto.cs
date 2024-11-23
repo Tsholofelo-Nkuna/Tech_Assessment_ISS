@@ -1,4 +1,6 @@
-﻿using Question3.Models.DataTransferObjects.Base;
+﻿using Question3.BusinessLogicLayer.Models.DataTransferObjects;
+using Question3.DataAccessLayer.Entities;
+using Question3.Models.DataTransferObjects.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,10 @@ namespace Question3.Models.DataTransferObjects
         public string LandlineNumber { get; set; } = string.Empty;
         public string Province { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
-        
+        public string PrimaryContactName { get; set; } = string.Empty;
+        public string PrimaryContactEmail { get; set; } = string.Empty;
+        public string PrimaryContactPhone { get; set; } = string.Empty;
+        public List<ContactPersonDto> ContactPerson { get; set; } = new List<ContactPersonDto>();
+
     }
 }

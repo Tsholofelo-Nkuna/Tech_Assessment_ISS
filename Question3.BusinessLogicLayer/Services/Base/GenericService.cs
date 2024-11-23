@@ -18,15 +18,13 @@ namespace Question3.BusinessLogicLayer.Services.Base
     {
         protected readonly WebDbContext _dbContext;
         protected readonly DbSet<TEntity> _entitySet;
-        protected readonly IMapper mapper;
-        public GenericService(WebDbContext dbContext)
+        protected readonly IMapper _mapper;
+        public GenericService(WebDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _entitySet = _dbContext.Set<TEntity>();
-            mapper = new MapperConfiguration(config =>
-            {
-                config.CreateMap<TDto, TEntity>().ReverseMap();
-            }).CreateMapper();
+            _mapper = mapper;
+       
         }
         public virtual async Task<bool> Delete(IEnumerable<Guid> identifiers)
         {
@@ -38,19 +36,19 @@ namespace Question3.BusinessLogicLayer.Services.Base
         public virtual async Task<IEnumerable<TDto>> Get(Expression<Func<TEntity, bool>> filter)
         {
             var list = await _entitySet.Where(filter).AsNoTracking().OrderByDescending(x=> x.CreatedOn).ToListAsync();
-            return mapper.Map<List<TDto>>(list);
+            return _mapper.Map<List<TDto>>(list);
         }
 
         public virtual async Task<bool> Insert(List<TDto> inserted)
         {
-            var toBeInserted = mapper.Map<List<TEntity>>(inserted);
+            var toBeInserted = _mapper.Map<List<TEntity>>(inserted);
             _entitySet.AddRange(toBeInserted);
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public virtual async Task<bool> Update(List<TDto> updates)
         {
-            var toBeUpdated = mapper.Map<List<TEntity>>(updates);
+            var toBeUpdated = _mapper.Map<List<TEntity>>(updates);
             _entitySet.UpdateRange(toBeUpdated);
             return await _dbContext.SaveChangesAsync() > 0;
         }

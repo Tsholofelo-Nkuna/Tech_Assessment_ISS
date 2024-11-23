@@ -1,5 +1,11 @@
 ﻿@model FormComponentViewModel
-<form class="card" asp-action="@Model.ActionName" asp-asp-controller="@Model.ControllerName" method="@Model.HttpMethod">
+<form class="card" asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" method="@Model.HttpMethod">
+    @{
+        foreach(var formStateKeyVal in Model.FormStateAsKeyValuePair().Where(kv => !Model.Fields.Any(field => kv.Key == field.Name)))
+        {
+            <input type="hidden" name="@formStateKeyVal.Key" value="@formStateKeyVal.Value" />
+        }
+    }
     <div class="card-body">
         <div class="row gx-5 gy-3">
             @foreach (var field in Model.Fields)
@@ -12,7 +18,18 @@
 
                             <div class="row">
                                 <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
-                                <div class="col"> <input class="form-control" name="@field.Name" value="@Model.GetValue(field.Name)" /></div>
+                                <div class="col">
+                                    @if (!field.Required)
+                                    {
+                                        <input class="form-control" name="@field.Name" value="@Model.GetValue(field.Name)" />
+                                    }
+                                    else
+                                    {
+                                        <input required class="form-control" name="@field.Name" value="@Model.GetValue(field.Name)" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    }
+                                   
+                                </div>
                             </div>
 
                             break;
@@ -30,16 +47,16 @@
                                 }
                                
                             </div>
-
                             break;
-
                     }
                 </div>
             }
-
         </div>
     </div>
-    <div class="card-footer">
-        <button class="btn btn-primary" type="submit">@Model.SubmitButtonText</button>
-    </div>
+    @if (!Model.CollapseFooter)
+    {
+        <div class="card-footer">
+            <button class="btn btn-primary" type="submit">@Model.SubmitButtonText</button>
+        </div>
+    }
 </form>

@@ -27,7 +27,7 @@
         </tr>
     </thead>
     <tbody>
-        @if (!Model.data.Any())
+        @if (!Model.Data.Any())
         {
             <tr>
                 <td colspan="@Model.ColumnConfigs.Count() + 1" class="text-center">
@@ -37,7 +37,7 @@
         }
         else
         {
-            @foreach(var rec in Model.data)
+            @foreach(var rec in Model.Data)
             {
                 <tr>
                     @foreach (var config in Model.ColumnConfigs)
@@ -45,11 +45,12 @@
                         <td>@DisplayColumnValue(config.Index, rec)</td>
                     }
                     <td>
-                        <div class="d-flex ju">
+                        <div class="d-flex">
                             <a asp-action="@Model.DeleteAction" asp-controller="@Model.DeleteController" asp-route-id="@rec.Id" class="btn btn-danger me-2">Delete</a>
                             @if(!rec.Archived){
                                <a asp-action="@Model.ArchiveAction" asp-controller="@Model.ArchiveController" asp-route-id="@rec.Id" class="btn btn-secondary me-2">Archive</a>
                             }
+                            <a asp-action="@Model.ViewAction" asp-controller="@Model.ViewController" asp-route-id="@rec.Id" class="btn btn-outline-primary me-2">View</a>
                         </div>
                     </td>
                 </tr>

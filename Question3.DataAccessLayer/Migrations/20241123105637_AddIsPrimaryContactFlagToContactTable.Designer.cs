@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Question3.DataAccessLayer;
 
@@ -11,9 +12,11 @@ using Question3.DataAccessLayer;
 namespace Question3.DataAccessLayer.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241123105637_AddIsPrimaryContactFlagToContactTable")]
+    partial class AddIsPrimaryContactFlagToContactTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,6 +243,9 @@ namespace Question3.DataAccessLayer.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsPrimaryContact")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LandlineNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -275,9 +281,6 @@ namespace Question3.DataAccessLayer.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsPrimaryContact")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
