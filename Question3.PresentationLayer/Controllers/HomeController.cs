@@ -19,87 +19,61 @@ namespace Question3.PresentationLayer.Controllers
 
         public Task<IActionResult> Index([FromQuery] ClientDto filters)
         {
-            try
-            {
+            
+            return this.HandleServiceRequestErrors(this._logger, () => {
                 var viewModel = new ClientsViewModel();
                 viewModel.SearchFormComponentViewModel.FormState = filters;
                 viewModel.TableConfig.Data = (_clientService.Get(filters)).Select(x => (dynamic)x).ToList();
                 return Task.FromResult<IActionResult>(View(viewModel));
-            }
-            catch (Exception ex)
-            {
-                this._logger.LogError(ex, $"Input\n: {filters.ToJsonString()}");
-                throw;
-            }
+            }, filters);
         }
 
         [HttpPost("[action]")]
         public async Task<IActionResult> AddOrUpdate([FromForm] ClientDto client)
         {
-            try
+            var result = await this.HandleServiceRequestErrors(_logger, async () =>
             {
                 var success = await this._clientService.AddOrUpdate(client);
                 return Redirect(this.Request.Headers.Referer!);
-            }
-            catch (Exception ex)
-            {
-                this._logger.LogError(ex, $"Input\n: {client.ToJsonString()}");
-                throw;
-            }
+            }, client);
+            return result;
         }
 
 
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-
-            try
-            {
-                await this._clientService.Delete(new List<Guid> { id });
-                return Redirect(Request.Headers.Referer!);
-            }
-            catch (Exception ex)
-            {
-                this._logger.LogError(ex, $"Input\n: {id.ToJsonString()}");
-                throw;
-            }
-        
+          return await this.HandleServiceRequestErrors(_logger, async () =>
+           {
+               await this._clientService.Delete(new List<Guid> { id });
+               return Redirect(Request.Headers.Referer!);
+           }, id);
         }
 
         [HttpGet("[action]/{Id}")]
         public async Task<IActionResult> Details(Guid Id)
         {
-            try
+            return await this.HandleServiceRequestErrors(_logger, async () =>
             {
-               var client = (await this._clientService.Get(x => x.Id == Id)).FirstOrDefault();
-               var vModel = new ClientDetailsViewModel(client ?? new ClientDto());
-               if(client is ClientDto clientDto)
+                var client = (await this._clientService.Get(x => x.Id == Id)).FirstOrDefault();
+                var vModel = new ClientDetailsViewModel(client ?? new ClientDto());
+                if (client is ClientDto clientDto)
                 {
                     vModel.ClientDto = clientDto;
                 }
-               return View(vModel);
-            }
-            catch (Exception ex)
-            {
-                this._logger.LogError(ex, $"input:\n {Id.ToJsonString()}");
-                throw;
-            }
+                return View(vModel);
+            }, Id);
         }
 
         public async Task<IActionResult> Archive([FromRoute] Guid id)
         {
-            try
+            return await this.HandleServiceRequestErrors(_logger, async () =>
             {
                 var success = await this._clientService.Archive(new List<Guid> { id });
                 var vModel = new ClientsViewModel();
                 vModel.TableConfig.Data = (await _clientService.Get(x => !x.Archived)).Select(x => (dynamic)x).ToList();
                 return Redirect(this.Request.Headers.Referer!);
-            }
-            catch (Exception ex)
-            {
-                this._logger.LogError(ex, $"Input\n: {id.ToJsonString()}");
-                throw;
-            }
+            }, id);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

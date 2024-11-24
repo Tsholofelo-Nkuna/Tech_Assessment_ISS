@@ -11,6 +11,7 @@ namespace Question3.PresentationLayer
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Logging.AddProvider(new FileLoggerProvider());
             builder.Services.AddDbContext<WebDbContext>(config =>
             {
                 config.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
