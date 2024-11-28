@@ -1,0 +1,54 @@
+﻿@using System.Reflection;
+@using System.Globalization;
+@using Core.Presentation.Models;
+@using System.Text.Json
+@using Core.Presentation.Models.DataTransferObjects.Base
+@typeparam TRecordType where TRecordType : BaseDto, new()
+    
+@{
+  
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @foreach (var colConfig in Model.ColumnConfigs)
+            {
+                <th>@(CultureInfo.InvariantCulture.TextInfo.ToTitleCase(colConfig.Name))</th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.ViewModelState.Any())
+        {
+            <tr>
+                <td colspan="@Model.ColumnConfigs.Count() + 1" class="text-center">
+                    No Data
+                </td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var rec in Model.ViewModelState)
+            {
+                <tr>
+                    @foreach (var config in Model.ColumnConfigs)
+                    {
+                        <td>@Model.Get(rec.Id, config.Index, typeof(string))</td>
+                    }
+                    <td>
+@*                         <div class="d-flex">
+                            <a asp-action="@Model.DeleteAction" asp-controller="@Model.DeleteController" asp-route-id="@rec.Id" class="btn btn-danger me-2">Delete</a>
+                            @if (!rec.Archived)
+                            {
+                                <a asp-action="@Model.ArchiveAction" asp-controller="@Model.ArchiveController" asp-route-id="@rec.Id" class="btn btn-secondary me-2">Archive</a>
+                            }
+                            <a asp-action="@Model.ViewAction" asp-controller="@Model.ViewController" asp-route-id="@rec.Id" class="btn btn-outline-primary me-2">View</a>
+                        </div> *@
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

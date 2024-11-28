@@ -1,0 +1,70 @@
+﻿@using Core.Presentation.Models
+@using Core.Presentation.Models.DataTransferObjects.Base
+@typeparam TState where TState : BaseDto, new()
+<form class="card">
+
+    @{  
+
+        if (Model.IncludeFormStatePropsAsHidden)
+        {
+            foreach (var formStateKeyVal in Model.FormStateAsKeyValuePair().Where(kv => !Model.Fields.Any(field => kv.Key == field.Name)))
+            {
+                <input type="hidden" name="@formStateKeyVal.Key" value="@formStateKeyVal.Value" /> 
+            }
+        }
+    }
+    <div class="card-body">
+        <div class="row gx-5 gy-3">
+            @foreach (var field in Model.Fields)
+            {
+                <div class="@Model.ColClass">
+
+                    @switch (field.ControlType)
+                    {
+                        case ControlType.Input:
+
+                            <div class="row">
+                                <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
+                                <div class="col">
+                                    @if (!field.Required)
+                                    {
+                                        <input class="form-control" name="@field.Name" 
+                                         @onchange = "(args)=> { Model.Set<string, object?>(args.Value)(field.Name); }" @bind:get="@Model.Get(field.Name, typeof(string))" />
+                                    }
+                                    else
+                                    {
+                                        <input required class="form-control" name="@field.Name" @onchange="(val) => Model.Set(field.Name, val)" @bind:get="@Model.Get(field.Name, typeof(string))" />
+                                        <div class="invalid-feedback">This field is required</div>
+                                    }
+
+                                </div>
+                            </div>
+
+                            break;
+                        case ControlType.Checkbox:
+
+                            <div class="row">
+                                <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
+                                @if (Model.Get(field.Name, typeof(bool)))
+                                {
+                                    <div class="col-auto text-start"> <input checked type="checkbox" class="form-check-input" name="@field.Name" value="@bool.TrueString" /></div>
+                                }
+                                else
+                                {
+                                    <div class="col-auto text-start"> <input type="checkbox" class="form-check-input" name="@field.Name" value="@bool.TrueString" /></div>
+                                }
+
+                            </div>
+                            break;
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    @if (!Model.CollapseFooter)
+    {
+        <div class="card-footer">
+            <button class="btn btn-primary" @onclick="FormSubmitClick">@Model.SubmitButtonText</button>
+        </div>
+    }
+</form>
