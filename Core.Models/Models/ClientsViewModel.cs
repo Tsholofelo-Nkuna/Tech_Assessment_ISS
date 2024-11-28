@@ -1,6 +1,7 @@
 ﻿
 using Core.Presentation.Models.DataTransferObjects;
 using Core.Presentation.Models.DataTransferObjects.Base;
+using Core.Presentation.Models.Models;
 
 namespace Core.Presentation.Models
 {
@@ -29,7 +30,6 @@ namespace Core.Presentation.Models
            
         };
        
-
         public TableComponentViewModel<ClientDto> TableConfig { get; set; } = new TableComponentViewModel<ClientDto>(new List<ClientDto>()){
             ColumnConfigs = new List<TableComponentColumnConfig>()
             {
@@ -120,5 +120,6 @@ namespace Core.Presentation.Models
             HttpMethod = "post",
             CollapseFooter = true,
         };
+        public ModalViewModel ModalViewModel { get; set; } = new ModalViewModel();
     }
 }

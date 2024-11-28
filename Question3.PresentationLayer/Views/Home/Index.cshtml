@@ -10,12 +10,12 @@
 
 <div>
       
- @*   <component 
+   <component 
        type="typeof(FormComponent<ClientDto>)" 
        render-mode="ServerPrerendered" 
        param-Model="Model.SearchFormComponentViewModel"
    >
-   </component> *@
+   </component>
    
 </div>
 <div class="card bg-light my-2">
@@ -26,9 +26,9 @@
             </button>
         </div>
     </div>
-    @* <div class="card-body">
+    <div class="card-body">
          <component type="typeof(TableComponent<ClientDto>)" render-mode="ServerPrerendered" param-Model=Model.TableConfig></component>
-    </div> *@
+    </div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" id="new-client-modal">
     <div class="modal-dialog">
@@ -39,7 +39,7 @@
                   
                 </button>
             </div>
-          @*   <form asp-action="@nameof(HomeController.AddOrUpdate)" asp-controller="Home">
+            <form asp-action="@nameof(HomeController.AddOrUpdate)" asp-controller="Home">
                 <div class="modal-body" style="max-height:412px; overflow-y:auto;">
                     <div id="client-details">
                         <component type="typeof(FormComponent<ClientDto>)" render-mode="ServerPrerendered" param-Model=Model.NewClientFormViewModel></component>
@@ -52,7 +52,7 @@
                 <div class="modal-footer">
                     <button type="submit" onclick="newClientSubmitClick()" class="btn btn-primary">Submit</button>
                 </div>
-            </form> *@
+            </form>
         </div>
     </div>
 </div>

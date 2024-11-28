@@ -27,7 +27,7 @@ namespace Core.Presentation.Models
         }
         public ClientDto ClientDto { get; set; }
         public FormComponentViewModel<ClientDto> DetailsFormViewModel { get; set; }
-
         public FormComponentViewModel<ClientDto> PrimaryContactPersonFormViewModel { get; set; }
+        public bool ShowNewClientModal {  get; set; }
     }
 }

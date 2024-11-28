@@ -1,0 +1,37 @@
+﻿@page "/"
+@using Core.Presentation.Models
+
+<PageTitle>Home</PageTitle>
+
+
+<div>
+ 
+    <FormComponent Model="ViewModel.SearchFormComponentViewModel"></FormComponent>
+
+</div>
+<div class="card bg-light my-2">
+    <div class="card-header">
+        <div class="d-flex">
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#new-client-modal" @onclick="()=>{ViewModel.ModalViewModel.Show = true;}">
+                New
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+     <TableComponent Model="ViewModel.TableConfig"></TableComponent>
+    </div>
+</div>
+<ModalComponent ViewModel="ViewModel.ModalViewModel">
+    <Body>
+        <div id="client-details">
+            <FormComponent Model="ViewModel.NewClientFormViewModel"></FormComponent>
+        </div>
+        <h5 class="my-3">Primary Contact Details</h5>
+        <div id="primary-contact-person">
+            <FormComponent Model="ViewModel.PrimaryContactFormViewModel"></FormComponent>
+        </div>
+    </Body>
+    <Footer>
+        <button class="btn btn-primary">Submit</button>
+    </Footer>
+</ModalComponent>

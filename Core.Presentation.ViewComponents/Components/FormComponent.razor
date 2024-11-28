@@ -28,12 +28,11 @@
                                 <div class="col">
                                     @if (!field.Required)
                                     {
-                                        <input class="form-control" name="@field.Name" 
-                                         @onchange = "(args)=> { Model.Set<string, object?>(args.Value)(field.Name); }" @bind:get="@Model.Get(field.Name, typeof(string))" />
+                                        <input class="form-control" name="@field.Name" />
                                     }
                                     else
                                     {
-                                        <input required class="form-control" name="@field.Name" @onchange="(val) => Model.Set(field.Name, val)" @bind:get="@Model.Get(field.Name, typeof(string))" />
+                                        <input required class="form-control" name="@field.Name"/>
                                         <div class="invalid-feedback">This field is required</div>
                                     }
 
@@ -64,7 +63,7 @@
     @if (!Model.CollapseFooter)
     {
         <div class="card-footer">
-            <button class="btn btn-primary" @onclick="FormSubmitClick">@Model.SubmitButtonText</button>
+            <button class="btn btn-primary">@Model.SubmitButtonText</button>
         </div>
     }
 </form>
