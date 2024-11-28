@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Question3.BusinessLogicLayer.Interfaces.Base;
-using Question3.BusinessLogicLayer.Models.DataTransferObjects.Base;
 using Question3.DataAccessLayer;
 using Question3.DataAccessLayer.Entities.Base;
-using Question3.Models.DataTransferObjects.Base;
+using Core.Presentation.Models.DataTransferObjects.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;

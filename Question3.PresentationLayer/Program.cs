@@ -1,3 +1,4 @@
+using Core.Presentation.ViewComponents.Components;
 using Microsoft.EntityFrameworkCore;
 using Question3.BusinessLogicLayer;
 using Question3.DataAccessLayer;
@@ -16,9 +17,10 @@ namespace Question3.PresentationLayer
             {
                 config.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
             });
+            builder.Services.AddServerSideBlazor();
             builder.Services.AddBusinessServices();
             builder.Services.AddControllersWithViews();
-            builder.Services.AddServerSideBlazor();
+           
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -39,7 +41,9 @@ namespace Question3.PresentationLayer
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+           
             app.MapBlazorHub();
+            app.MapFallbackToController("Blazor", "Home");
             app.Run();
         }
     }

@@ -11,7 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Question3.DataAccessLayer\Question3.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\Core.Models\Core.Presentation.Models.csproj" />
+    <ProjectReference Include="..\Question3.DataAccessLayer\ClientManagement.DataAccessLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

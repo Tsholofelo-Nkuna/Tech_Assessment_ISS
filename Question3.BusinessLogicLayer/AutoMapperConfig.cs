@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Question3.BusinessLogicLayer.Models.DataTransferObjects;
+using Core.Presentation.Models.DataTransferObjects;
 using Question3.DataAccessLayer.Entities;
-using Question3.Models.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

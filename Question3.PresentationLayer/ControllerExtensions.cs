@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Presentation.ViewComponents;
+using Core.Presentation.ViewComponents.Interfaces.Base;
+using Microsoft.AspNetCore.Mvc;
 using Question3.BusinessLogicLayer;
 using Question3.PresentationLayer.Controllers;
+using Question3.PresentationLayer.Views.Home;
 
 namespace Question3.PresentationLayer
 {
@@ -26,6 +29,11 @@ namespace Question3.PresentationLayer
                 throw;
             }
 			
+        }
+
+        public static void InvokePageInit<TModel>(this ControllerBase controller, IActionResult? pageBase , TModel model)
+        {
+            
         }
     }
 }

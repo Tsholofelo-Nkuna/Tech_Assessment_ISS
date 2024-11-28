@@ -1,10 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <base href="~/" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Client Management</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <component type="typeof(Microsoft.AspNetCore.Components.Web.HeadOutlet)"
+               render-mode="ServerPrerendered" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Question3.PresentationLayer.styles.css" asp-append-version="true" />
 </head>
@@ -31,6 +34,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="_framework/blazor.server.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+   
 </body>
 </html>

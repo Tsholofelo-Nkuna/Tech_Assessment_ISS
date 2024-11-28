@@ -9,11 +9,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ISS_Assememnt.UnitTests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Question2", "Question2\Question2.csproj", "{982E56B3-75F4-490F-92C6-27DF4E54A237}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Question3.DataAccessLayer", "Question3.DataAccessLayer\Question3.DataAccessLayer.csproj", "{14AD62AF-5D27-423E-B4B8-42FC9E0C25F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientManagement.DataAccessLayer", "Question3.DataAccessLayer\ClientManagement.DataAccessLayer.csproj", "{14AD62AF-5D27-423E-B4B8-42FC9E0C25F6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Question3.BusinessLogicLayer", "Question3.BusinessLogicLayer\Question3.BusinessLogicLayer.csproj", "{672F6CFB-6791-4B65-BACB-5F3A90747DAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientManagement.BusinessLogicLayer", "Question3.BusinessLogicLayer\ClientManagement.BusinessLogicLayer.csproj", "{672F6CFB-6791-4B65-BACB-5F3A90747DAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Question3.PresentationLayer", "Question3.PresentationLayer\Question3.PresentationLayer.csproj", "{F7308C23-1FA1-4C0C-A506-C7FFD14AF4C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientManagement.PresentationLayer", "Question3.PresentationLayer\ClientManagement.PresentationLayer.csproj", "{F7308C23-1FA1-4C0C-A506-C7FFD14AF4C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Presentation.ViewComponents", "Core.Presentation.ViewComponents\Core.Presentation.ViewComponents.csproj", "{C87671CC-39EE-4E43-B0DA-F31AF523B5A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Presentation.Models", "Core.Models\Core.Presentation.Models.csproj", "{8A6060E2-947D-4ED3-ACEC-D39563107D1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientManagement.UnitTests", "ClientManagement.UnitTests\ClientManagement.UnitTests.csproj", "{062F4CF7-9F26-4AF3-B65F-977BAC88AC27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +51,18 @@ Global
 		{F7308C23-1FA1-4C0C-A506-C7FFD14AF4C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7308C23-1FA1-4C0C-A506-C7FFD14AF4C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7308C23-1FA1-4C0C-A506-C7FFD14AF4C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C87671CC-39EE-4E43-B0DA-F31AF523B5A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C87671CC-39EE-4E43-B0DA-F31AF523B5A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C87671CC-39EE-4E43-B0DA-F31AF523B5A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C87671CC-39EE-4E43-B0DA-F31AF523B5A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A6060E2-947D-4ED3-ACEC-D39563107D1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A6060E2-947D-4ED3-ACEC-D39563107D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A6060E2-947D-4ED3-ACEC-D39563107D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A6060E2-947D-4ED3-ACEC-D39563107D1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{062F4CF7-9F26-4AF3-B65F-977BAC88AC27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{062F4CF7-9F26-4AF3-B65F-977BAC88AC27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{062F4CF7-9F26-4AF3-B65F-977BAC88AC27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{062F4CF7-9F26-4AF3-B65F-977BAC88AC27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

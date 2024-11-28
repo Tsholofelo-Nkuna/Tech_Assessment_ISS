@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Question3.BusinessLogicLayer;
 using Question3.BusinessLogicLayer.Interfaces;
-using Question3.Models.DataTransferObjects;
-using Question3.PresentationLayer.Models;
+using Core.Presentation.Models.DataTransferObjects;
+using Core.Presentation.Models;
 using System.Diagnostics;
+
 
 namespace Question3.PresentationLayer.Controllers
 {
@@ -17,14 +17,16 @@ namespace Question3.PresentationLayer.Controllers
             _clientService = clientService;
         }
 
+        
         public Task<IActionResult> Index([FromQuery] ClientDto filters)
         {
             
             return this.HandleServiceRequestErrors(this._logger, () => {
                 var viewModel = new ClientsViewModel();
-                viewModel.SearchFormComponentViewModel.FormState = filters;
-                viewModel.TableConfig.Data = (_clientService.Get(filters)).Select(x => (dynamic)x).ToList();
-                return Task.FromResult<IActionResult>(View(viewModel));
+                viewModel.SearchFormComponentViewModel.ViewModelState = filters;
+                viewModel.TableConfig.ViewModelState = (_clientService.Get(filters)).ToList();
+                var actionResult = View(viewModel); 
+                return Task.FromResult<IActionResult>(actionResult);
             }, filters);
         }
 
@@ -71,7 +73,7 @@ namespace Question3.PresentationLayer.Controllers
             {
                 var success = await this._clientService.Archive(new List<Guid> { id });
                 var vModel = new ClientsViewModel();
-                vModel.TableConfig.Data = (await _clientService.Get(x => !x.Archived)).Select(x => (dynamic)x).ToList();
+                vModel.TableConfig.ViewModelState = (await _clientService.Get(x => !x.Archived)).ToList();
                 return Redirect(this.Request.Headers.Referer!);
             }, id);
         }
@@ -80,6 +82,11 @@ namespace Question3.PresentationLayer.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Blazor()
+        {
+            return View("_Host");
         }
     }
 }
