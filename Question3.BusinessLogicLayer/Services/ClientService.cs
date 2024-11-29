@@ -72,8 +72,15 @@ namespace Question3.BusinessLogicLayer.Services
             {
                 query = query.Where(x => x.CompanyName.Contains(filter.CompanyName));
             }
-
-            return this._mapper.Map<List<ClientDto>>(query.Include(x => x.ContactPerson).OrderByDescending(x => x.CreatedOn).ToList());
+            var returned = this._mapper.Map<List<ClientDto>>(query.Include(x => x.ContactPerson).OrderByDescending(x => x.CreatedOn).ToList());
+            returned.ForEach(x =>
+            {
+                var primaryContact = x.ContactPerson.FirstOrDefault(x => x.IsPrimaryContact);
+                x.PrimaryContactEmail  = primaryContact?.Email ?? string.Empty;
+                x.PrimaryContactPhone = primaryContact?.Phone ?? string.Empty;
+                x.PrimaryContactName = primaryContact?.Name ?? string.Empty;
+            });
+            return returned;
         }
 
         public override Task<IEnumerable<ClientDto>> Get(Expression<Func<ClientEntity, bool>> filter)

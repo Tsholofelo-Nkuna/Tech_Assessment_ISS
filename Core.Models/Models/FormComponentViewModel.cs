@@ -6,9 +6,13 @@ using System.Reflection;
 namespace Core.Presentation.Models
 {
    
-    public class FormComponentViewModel<TFormState>: GenericViewModel<TFormState> where TFormState: BaseDto, new()
+    public class FormComponentViewModel<TRecordType>: GenericListViewModel<TRecordType> where TRecordType : BaseDto, new()
     {
-        public FormComponentViewModel(TFormState formState): base(formState) { }
+       public FormComponentViewModel(): base(Enumerable.Empty<TRecordType>())
+        {
+
+        }
+        public FormComponentViewModel(IEnumerable<TRecordType> vModelState): base(vModelState) { }
      
         public List<InputFieldViewModel> Fields { get; set; } = new List<InputFieldViewModel>();
         public string ColClass { get; set; } = "col-4";
@@ -18,15 +22,6 @@ namespace Core.Presentation.Models
         public string HttpMethod { get; set; } = "post";
         public bool CollapseFooter { get; set; } = false;
         public bool IncludeFormStatePropsAsHidden {  get; set; }
-
-        public IEnumerable<KeyValuePair<string, object?>> FormStateAsKeyValuePair ()
-        {
-           return this.ViewModelState
-                .GetType()
-                .GetProperties()
-                .Where(prop => prop.CanRead && prop.GetGetMethod() is MethodInfo and { IsPublic : true})
-                .Select(prop => new KeyValuePair<string, object?>(prop.Name, prop.GetValue(this.ViewModelState)));
-        }
 
     }
 }

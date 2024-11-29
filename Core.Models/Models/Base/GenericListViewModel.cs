@@ -2,6 +2,7 @@
 using Core.Presentation.Models.Interfaces.Base;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace Core.Presentation.Models.Models.Base
     public class GenericListViewModel<TRecordType> : IGenericListViewModel<TRecordType> where TRecordType: BaseDto, new()
     {
         private GenericViewModel<TRecordType> _genericViewModel = new GenericViewModel<TRecordType>(new TRecordType());
+       
         public IEnumerable<TRecordType> ViewModelState { get; set; }
         public GenericListViewModel(IEnumerable<TRecordType> state) {
            this.ViewModelState = state;

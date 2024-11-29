@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace Core.Presentation.Models.Models
+using Core.Presentation.Models.DataTransferObjects.Base;
+using Core.Presentation.Models.Models.Base;
+
+namespace Core.Presentation.Models
 {
-    public class ModalViewModel
+    public class ModalViewModel<TRecordType> : GenericListViewModel<TRecordType> where TRecordType : BaseDto, new()
     {
+        public ModalViewModel(): this(Enumerable.Empty<TRecordType>()) { }
+        public ModalViewModel(IEnumerable<TRecordType> recs) : base(recs)
+        {
+        }
         public string DisplayStyle { get; set; } = "none";
         public string ShowhowClass { get; set; } = "show";
         private bool _show = false;

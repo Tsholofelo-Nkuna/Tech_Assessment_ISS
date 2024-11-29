@@ -1,13 +1,16 @@
 ﻿using Core.Presentation.Models;
 using Core.Presentation.Models.DataTransferObjects.Base;
-using Microsoft.AspNetCore.Components;
+using Core.Presentation.ViewComponents.Components.Base;
+
 
 namespace Core.Presentation.ViewComponents.Components
 {
-    public partial class TableComponent<TRecordType> where TRecordType : BaseDto, new()
+    public partial class TableComponent<TRecordType> : GenericComponentBase<TableComponentViewModel<TRecordType>, TRecordType>
+        where TRecordType : BaseDto, new()
+       
     {
-       [Parameter]
-       public TableComponentViewModel<TRecordType> Model { get; set; } = new TableComponentViewModel<TRecordType>(Enumerable.Empty<TRecordType>());
-     
+        //[Parameter]
+        //public TableComponentViewModel<TRecordType> ViewModel { get; set; } = new TableComponentViewModel<TRecordType>(Enumerable.Empty<TRecordType>());
+        public TableComponent() { }
     }
 }

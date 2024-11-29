@@ -3,8 +3,9 @@
 @using Core.Presentation.Models;
 @using System.Text.Json
 @using Core.Presentation.Models.DataTransferObjects.Base
+@using Core.Presentation.ViewComponents.Components.Base
 @typeparam TRecordType where TRecordType : BaseDto, new()
-    
+@inherits GenericComponentBase<TableComponentViewModel<TRecordType>, TRecordType>
 @{
   
 }
@@ -12,7 +13,7 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            @foreach (var colConfig in Model.ColumnConfigs)
+            @foreach (var colConfig in ViewModel.ColumnConfigs)
             {
                 <th>@(CultureInfo.InvariantCulture.TextInfo.ToTitleCase(colConfig.Name))</th>
             }
@@ -20,31 +21,31 @@
         </tr>
     </thead>
     <tbody>
-        @if (!Model.ViewModelState.Any())
+        @if (!ViewModel.ViewModelState.Any())
         {
             <tr>
-                <td colspan="@Model.ColumnConfigs.Count() + 1" class="text-center">
+                <td colspan="@ViewModel.ColumnConfigs.Count() + 1" class="text-center">
                     No Data
                 </td>
             </tr>
         }
         else
         {
-            @foreach (var rec in Model.ViewModelState)
+            @foreach (var rec in ViewModel.ViewModelState)
             {
                 <tr>
-                    @foreach (var config in Model.ColumnConfigs)
+                    @foreach (var config in ViewModel.ColumnConfigs)
                     {
-                        <td>@Model.Get(rec.Id, config.Index, typeof(string))</td>
+                        <td>@ViewModel.Get(rec.Id, config.Index, typeof(string))</td>
                     }
                     <td>
                         <div class="d-flex">
-                            <a asp-action="@Model.DeleteAction" asp-controller="@Model.DeleteController" asp-route-id="@rec.Id" class="btn btn-danger me-2">Delete</a>
+                            <a href="@($"/{ViewModel.DeleteController}/{ViewModel.DeleteAction}/{rec.Id}")" class="btn btn-danger me-2">Delete</a>
                             @if (!rec.Archived)
                             {
-                                <a asp-action="@Model.ArchiveAction" asp-controller="@Model.ArchiveController" asp-route-id="@rec.Id" class="btn btn-secondary me-2">Archive</a>
+                                <a href="@($"/{ViewModel.ArchiveController}/{ViewModel.ArchiveAction}/{rec.Id}")" class="btn btn-secondary me-2">Archive</a>
                             }
-                            <a asp-action="@Model.ViewAction" asp-controller="@Model.ViewController" asp-route-id="@rec.Id" class="btn btn-outline-primary me-2">View</a>
+                            <button @onclick="() => OnNavigate(ViewModel.ViewController, ViewModel.ViewAction, rec.Id)" class="btn btn-outline-primary me-2">View</button>
                         </div>
                     </td>
                 </tr>

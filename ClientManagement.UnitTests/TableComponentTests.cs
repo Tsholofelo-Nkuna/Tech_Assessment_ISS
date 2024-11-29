@@ -13,14 +13,14 @@ namespace ClientManagement.UnitTests
         public bool CreateTableComponentWorks<TDto>(TableComponentViewModel<TDto> model) where TDto : BaseDto, new()
         {
             var tComponent = new TableComponent<TDto>();
-            Assert.That((tComponent.Model?.ViewModelState?.Count() ?? -1) >= 0, Is.True);
+            Assert.That((tComponent.ViewModel?.ViewModelState?.Count() ?? -1) >= 0, Is.True);
 
-            tComponent.Model = model;
-            tComponent.Model.ViewModelState =  tComponent.Model.ViewModelState.Append(new TDto());
+            tComponent.ViewModel = model;
+            tComponent.ViewModel.ViewModelState =  tComponent.ViewModel.ViewModelState.Append(new TDto());
            
-            Assert.That(tComponent.Model.Get(Guid.Empty, nameof(BaseDto.Archived), typeof(bool)), Is.False);
-            tComponent.Model.Set(Guid.Empty, nameof(BaseDto.Archived), true);
-            return tComponent.Model.Get(Guid.Empty, nameof(BaseDto.Archived), typeof(bool)) ;
+            Assert.That(tComponent.ViewModel.Get(Guid.Empty, nameof(BaseDto.Archived), typeof(bool)), Is.False);
+            tComponent.ViewModel.Set(Guid.Empty, nameof(BaseDto.Archived), true);
+            return tComponent.ViewModel.Get(Guid.Empty, nameof(BaseDto.Archived), typeof(bool)) ;
         }
     }
 

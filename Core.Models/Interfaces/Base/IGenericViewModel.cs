@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.Presentation.Models.Interfaces.Base
 {
-    public interface IGenericViewModel<TState> : IBindToSetterDelegateBase<string, object?, TState>
+    public interface IGenericViewModel<TState> : IBindToSetterDelegateBase<string, object?, TState> where TState : BaseDto, new()
     {
         public delegate void ViewModelStateChangeDelegate(TState viewModelState);
         public void Set<TSource>(string propName, TSource propValue);

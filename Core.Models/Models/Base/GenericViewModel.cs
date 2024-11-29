@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Core.Presentation.Models.Models.Base
 {
-    public class GenericViewModel<TState> : IGenericViewModel<TState>
+    public class GenericViewModel<TState> : IGenericViewModel<TState> where TState : BaseDto, new()
     {
         public event IGenericViewModel<TState>.ViewModelStateChangeDelegate? ViewModelStateChangeEvent;
         public GenericViewModel(TState viewModelState) { 

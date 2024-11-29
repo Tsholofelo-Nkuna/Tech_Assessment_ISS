@@ -6,8 +6,6 @@
 @{
     var primaryContact = Model.ClientDto.ContactPerson.Where(x => x.IsPrimaryContact).FirstOrDefault();
 }
-
-@model ClientDetailsViewModel;
 <div class="mb-2">
     <a class="btn btn-link" asp-action="@nameof(HomeController.Index)" asp-controller="Home">Back</a>
 </div>

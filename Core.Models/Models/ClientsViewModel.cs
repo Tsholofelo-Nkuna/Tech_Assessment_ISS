@@ -7,7 +7,7 @@ namespace Core.Presentation.Models
 {
     public class ClientsViewModel
     {
-        public FormComponentViewModel<ClientDto> SearchFormComponentViewModel { get; set; } = new FormComponentViewModel<ClientDto>(new ClientDto())
+        public FormComponentViewModel<ClientDto> SearchFormComponentViewModel { get; set; } = new FormComponentViewModel<ClientDto>(Enumerable.Empty<ClientDto>().Append(new ClientDto()))
         {
             ColClass = "col-4",
             SubmitButtonText = "Filter",
@@ -40,14 +40,14 @@ namespace Core.Presentation.Models
                 new TableComponentColumnConfig() { Index = nameof(ClientDto.Address), Name = "Address"}
             },
             DeleteAction = "Delete",//nameof(HomeController.Delete),
-            DeleteController = "Home",
+            DeleteController = "",
             ArchiveAction = "Archive", //nameof(HomeController.Archive),
-            ArchiveController = "Home",
+            ArchiveController = "",
             ViewAction = "Details",//nameof(HomeController.Details),
-            ViewController = "Home",
+            ViewController = "",
         };
 
-        public FormComponentViewModel<ClientDto> NewClientFormViewModel { get; set; } = new FormComponentViewModel<ClientDto>(new ClientDto())
+        public FormComponentViewModel<ClientDto> NewClientFormViewModel { get; set; } = new(Enumerable.Empty<ClientDto>().Append(new ClientDto()))
         {
             Fields = new()
             {
@@ -90,7 +90,7 @@ namespace Core.Presentation.Models
            
             CollapseFooter = true,
         };
-        public FormComponentViewModel<ClientDto> PrimaryContactFormViewModel { get; set; } = new FormComponentViewModel<ClientDto>(new ClientDto())
+        public FormComponentViewModel<ClientDto> PrimaryContactFormViewModel { get; set; } = new (Enumerable.Empty<ClientDto>().Append(new ClientDto()))
         {
             Fields = new()
             {
@@ -120,6 +120,6 @@ namespace Core.Presentation.Models
             HttpMethod = "post",
             CollapseFooter = true,
         };
-        public ModalViewModel ModalViewModel { get; set; } = new ModalViewModel();
+        public ModalViewModel<ClientDto> ModalViewModel { get; set; } = new ModalViewModel<ClientDto>();
     }
 }

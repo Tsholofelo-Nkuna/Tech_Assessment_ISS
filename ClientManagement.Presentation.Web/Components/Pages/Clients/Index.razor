@@ -1,12 +1,12 @@
 ﻿@page "/"
 @using Core.Presentation.Models
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Client - Management</PageTitle>
 
 
 <div>
  
-    <FormComponent Model="ViewModel.SearchFormComponentViewModel"></FormComponent>
+    <FormComponent ViewModel="ViewModel.SearchFormComponentViewModel"></FormComponent>
 
 </div>
 <div class="card bg-light my-2">
@@ -18,17 +18,17 @@
         </div>
     </div>
     <div class="card-body">
-     <TableComponent Model="ViewModel.TableConfig"></TableComponent>
+     <TableComponent ViewModel="ViewModel.TableConfig"></TableComponent>
     </div>
 </div>
 <ModalComponent ViewModel="ViewModel.ModalViewModel">
     <Body>
         <div id="client-details">
-            <FormComponent Model="ViewModel.NewClientFormViewModel"></FormComponent>
+            <FormComponent ViewModel="ViewModel.NewClientFormViewModel"></FormComponent>
         </div>
         <h5 class="my-3">Primary Contact Details</h5>
         <div id="primary-contact-person">
-            <FormComponent Model="ViewModel.PrimaryContactFormViewModel"></FormComponent>
+            <FormComponent ViewModel="ViewModel.PrimaryContactFormViewModel"></FormComponent>
         </div>
     </Body>
     <Footer>

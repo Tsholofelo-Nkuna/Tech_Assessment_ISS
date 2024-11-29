@@ -1,4 +1,8 @@
-﻿
+﻿@using Core.Presentation.Models.DataTransferObjects.Base
+@using Core.Presentation.Models
+@using Core.Presentation.ViewComponents.Components.Base
+@typeparam TRecordType where TRecordType : BaseDto, new()
+@inherits  GenericComponentBase<ModalViewModel<TRecordType>, TRecordType>
 <div class="modal fade @ViewModel.ShowhowClass" style="display:@ViewModel.DisplayStyle" tabindex="-1" role="dialog" id="new-client-modal">
     <div class="modal-dialog">
         <div class="modal-content">

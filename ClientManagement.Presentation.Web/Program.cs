@@ -1,4 +1,7 @@
 using ClientManagement.Presentation.Web.Components;
+using Microsoft.EntityFrameworkCore;
+using Question3.BusinessLogicLayer;
+using Question3.DataAccessLayer;
 
 namespace ClientManagement.Presentation.Web
 {
@@ -9,9 +12,10 @@ namespace ClientManagement.Presentation.Web
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<WebDbContext>(c => c.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
-
+            builder.Services.AddBusinessServices();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
