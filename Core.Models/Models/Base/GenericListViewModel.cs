@@ -1,19 +1,18 @@
 ﻿using Core.Presentation.Models.DataTransferObjects.Base;
 using Core.Presentation.Models.Interfaces.Base;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Core.Presentation.Models.Models.Base
 {
     public class GenericListViewModel<TRecordType> : IGenericListViewModel<TRecordType> where TRecordType: BaseDto, new()
     {
         private GenericViewModel<TRecordType> _genericViewModel = new GenericViewModel<TRecordType>(new TRecordType());
-       
+
+        public event IGenericListViewModel<TRecordType>.OnViewModelStateChangeDelegate OnViewModelStateChangedEvent;
+
         public IEnumerable<TRecordType> ViewModelState { get; set; }
+       
         public GenericListViewModel(IEnumerable<TRecordType> state) {
            this.ViewModelState = state;
         }
@@ -40,8 +39,29 @@ namespace Core.Presentation.Models.Models.Base
             {
                 _genericViewModel.ViewModelState = target;
                 _genericViewModel.Set(propName, value);
+                this.OnViewModelStateChangedEvent.Invoke(this.ViewModelState);
             }
 
+        }
+
+        public Task OnViewModelStateChanged(IEnumerable<TRecordType> updated)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddViewModelStateChangeListener(IGenericListViewModel<TRecordType>.OnViewModelStateChangeDelegate listener)
+        {
+            this.OnViewModelStateChangedEvent += listener;  
+        }
+
+        public void ClearViewModelStateChangeListeners()
+        {
+            this.OnViewModelStateChangedEvent = null;
+        }
+
+        ~GenericListViewModel()
+        {
+          this.ClearViewModelStateChangeListeners();
         }
     }
 }

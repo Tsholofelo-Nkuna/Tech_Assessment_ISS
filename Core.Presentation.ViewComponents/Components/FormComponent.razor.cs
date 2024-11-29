@@ -8,16 +8,24 @@ using Microsoft.AspNetCore.Components;
 namespace Core.Presentation.ViewComponents.Components
 {
     public partial class FormComponent<TRecord>: GenericComponentBase<FormComponentViewModel<TRecord>, TRecord> where TRecord : BaseDto, new()
-    { 
-     
+    {
+
+        [Parameter] 
+        public EventCallback<IEnumerable<TRecord>> ViewModelStateChanged { get; set; } = new EventCallback<IEnumerable<TRecord>>();
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            //this.Model.AddStateChangeListener(OnFormStateChanged); 
+            this.ViewModel.AddViewModelStateChangeListener(this.OnViewModelStateChanged); 
         }
         public void FormSubmitClick()
         {
-           
+        }
+
+        public override async Task OnViewModelStateChanged(IEnumerable<TRecord> update)
+        {
+            base.OnViewModelStateChanged(update);
+            await ViewModelStateChanged.InvokeAsync(update);
+
         }
 
 
@@ -29,7 +37,7 @@ namespace Core.Presentation.ViewComponents.Components
 
         ~FormComponent()
         {
-            //this.Model.ClearStateChangeListeners();
+           this.ViewModel.ClearViewModelStateChangeListeners();
         }
     }
 }

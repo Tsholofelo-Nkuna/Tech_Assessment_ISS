@@ -17,7 +17,7 @@ namespace Core.Presentation.ViewComponents.Interfaces.Base
         TViewModel ViewModel { get; set; }
         NavigationManager? NavManager { get; set; }
         public void OnNavigate(string controllerName, string actionName, Guid stateId);
-        public void OnViewModelStateChanged(TRecordType recordState);
+        public Task OnViewModelStateChanged(IEnumerable<TRecordType> update);
         public IEnumerable<KeyValuePair<string, object?>> RecordAsKeyValuePairs(TRecordType record);
     }
 }

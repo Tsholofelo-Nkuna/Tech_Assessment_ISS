@@ -34,11 +34,19 @@
                                     <div class="col">
                                         @if (!field.Required)
                                         {
-                                            <input class="form-control" name="@field.Name" value="@ViewModel.Get(sourceRecord.Id, field.Name, typeof(string))"/>
+                                            <input class="form-control" 
+                                            name="@field.Name" 
+                                            value="@ViewModel.Get(sourceRecord.Id, field.Name, typeof(string))"
+                                            @onchange = "async (eventArgs) => { ViewModel.Set(sourceRecord.Id, field.Name, eventArgs.Value); }"/>
                                         }
                                         else
                                         {
-                                            <input required class="form-control" name="@field.Name" value="@ViewModel.Get(sourceRecord.Id, field.Name, typeof(string))" />
+                                            <input
+                                                required 
+                                                class="form-control" 
+                                                name="@field.Name" 
+                                                value="@ViewModel.Get(sourceRecord.Id, field.Name, typeof(string))"
+                                                @onchange="async (eventArgs) => { ViewModel.Set(sourceRecord.Id, field.Name, eventArgs.Value); }" />
                                             <div class="invalid-feedback">This field is required</div>
                                         }
 

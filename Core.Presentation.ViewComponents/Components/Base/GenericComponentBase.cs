@@ -16,10 +16,12 @@ namespace Core.Presentation.ViewComponents.Components.Base
         where TViewModel : IGenericListViewModel<TRecordType>, new()
         where TRecordType : BaseDto, new()
     {
+       
         public GenericComponentBase() : this(new TViewModel()) { }
         public GenericComponentBase(TViewModel viewModel)
         {
             ViewModel = viewModel;
+            viewModel.OnViewModelStateChangedEvent += this.OnViewModelStateChanged;
 
         }
         [Parameter]
@@ -32,16 +34,22 @@ namespace Core.Presentation.ViewComponents.Components.Base
             NavManager.NavigateTo($"{controllerName}/{actionName}/{stateId}");
         }
 
-        public void OnViewModelStateChanged(TRecordType recordState)
+        public virtual Task OnViewModelStateChanged(IEnumerable<TRecordType> update)
         {
-            throw new NotImplementedException();
+           return Task.CompletedTask;
         }
+
 
         public IEnumerable<KeyValuePair<string, object?>> RecordAsKeyValuePairs(TRecordType record) =>
              typeof(TRecordType)
                 .GetProperties()
                 .Where(x => x is PropertyInfo { CanRead: true } and { GetMethod.IsPublic: true })
                 .Select(pInfo => new KeyValuePair<string, object>(pInfo.Name, pInfo.GetValue(record)));
+
+        ~GenericComponentBase()
+        {
+            this.ViewModel.OnViewModelStateChangedEvent-= this.OnViewModelStateChanged;
+        }
 
     }
 }
