@@ -2,13 +2,14 @@
 @using Core.Presentation.Models.DataTransferObjects.Base
 @using Core.Presentation.Models.Models.Base
 @using Core.Presentation.ViewComponents.Components.Base
+@using Microsoft.AspNetCore.Components.Forms
 @typeparam TRecord where TRecord: BaseDto, new()
 @inherits GenericComponentBase<FormComponentViewModel<TRecord>, TRecord> 
 
 @foreach(var sourceRecord in this.ViewModel.ViewModelState)
 {
-    <form class="card">
-
+    <form class="card" method="@this.ViewModel.HttpMethod">
+          <AntiforgeryToken/>
         @{
 
             if (ViewModel.IncludeFormStatePropsAsHidden)
@@ -60,11 +61,11 @@
                                     <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
                                     @if (ViewModel.Get(sourceRecord.Id,field.Name, typeof(bool)))
                                     {
-                                        <div class="col-auto text-start"> <input checked type="checkbox" class="form-check-input" name="@field.Name" value="@bool.TrueString" /></div>
+                                        <div class="col-auto text-start"> <input @oninput="async (eventArgs) => { ViewModel.Set(sourceRecord.Id, field.Name, eventArgs.Value); }" checked type="checkbox" class="form-check-input" name="@field.Name"/></div>
                                     }
                                     else
                                     {
-                                        <div class="col-auto text-start"> <input type="checkbox" class="form-check-input" name="@field.Name" value="@bool.TrueString" /></div>
+                                        <div class="col-auto text-start"> <input type="checkbox" @oninput="async (eventArgs) => { ViewModel.Set(sourceRecord.Id, field.Name, eventArgs.Value); }" class=" form-check-input" name="@field.Name" /></div>
                                     }
 
                                 </div>
