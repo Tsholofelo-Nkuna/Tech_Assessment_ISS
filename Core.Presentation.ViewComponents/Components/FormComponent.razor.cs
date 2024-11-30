@@ -25,7 +25,7 @@ namespace Core.Presentation.ViewComponents.Components
         {
             base.OnViewModelStateChanged(update);
             await ViewModelStateChanged.InvokeAsync(update);
-
+            
         }
 
 

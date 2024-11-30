@@ -20,7 +20,7 @@ namespace Core.Presentation.Models
         public string ActionName { get; set; } = string.Empty;
         public string ControllerName { get; set; } = string.Empty;
         public string HttpMethod { get; set; } = "post";
-        public bool CollapseFooter { get; set; } = false;
+        public bool CollapseFooter { get; set; } = true;
         public bool IncludeFormStatePropsAsHidden {  get; set; }
 
     }
