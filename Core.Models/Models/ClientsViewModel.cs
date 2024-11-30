@@ -1,12 +1,15 @@
 ﻿
 using Core.Presentation.Models.DataTransferObjects;
-using Core.Presentation.Models.DataTransferObjects.Base;
-using Core.Presentation.Models.Models;
+using Core.Presentation.Models.Models.Base;
+
 
 namespace Core.Presentation.Models
 {
-    public class ClientsViewModel
+    public class ClientsViewModel : GenericListViewModel<ClientDto>
     {
+        public ClientsViewModel() : this(Enumerable.Empty<ClientDto>()){ }
+        public ClientsViewModel(IEnumerable<ClientDto> clients): base(clients)
+        {}
         public FormComponentViewModel<ClientDto> SearchFormComponentViewModel { get; set; } = new FormComponentViewModel<ClientDto>(Enumerable.Empty<ClientDto>().Append(new ClientDto()))
         {
             ColClass = "col-4",
@@ -24,7 +27,7 @@ namespace Core.Presentation.Models
                     ControlType = ControlType.Checkbox,
                 }
             },
-            HttpMethod = "get",
+            HttpMethod = "post",
             ActionName = string.Empty, //nameof(HomeController.Index),
             ControllerName = "Home",
            
