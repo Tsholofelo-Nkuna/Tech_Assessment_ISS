@@ -31,11 +31,12 @@ namespace Core.Presentation.ViewComponents.Components.Base
         public void OnNavigate(string controllerName, string actionName, Guid stateId)
         {
             var baseUrl = string.IsNullOrEmpty(controllerName) ? "/" : "";
-            NavManager.NavigateTo($"{controllerName}/{actionName}/{stateId}");
+            NavManager.NavigateTo($"{controllerName}/{actionName}/{stateId}", true);
         }
 
         public virtual Task OnViewModelStateChanged(IEnumerable<TRecordType> update)
         {
+           StateHasChanged();
            return Task.CompletedTask;
         }
 
