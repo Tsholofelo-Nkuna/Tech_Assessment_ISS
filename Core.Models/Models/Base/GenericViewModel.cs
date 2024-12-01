@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Core.Presentation.Models.Models.Base
+namespace Core.Presentation.Models.Base
 {
     public class GenericViewModel<TState> : IGenericViewModel<TState> where TState : BaseDto, new()
     {

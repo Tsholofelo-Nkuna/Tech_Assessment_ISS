@@ -3,7 +3,7 @@ using Core.Presentation.Models.Interfaces.Base;
 using System.Diagnostics;
 
 
-namespace Core.Presentation.Models.Models.Base
+namespace Core.Presentation.Models.Base
 {
     public class GenericListViewModel<TRecordType> : IGenericListViewModel<TRecordType> where TRecordType: BaseDto, new()
     {

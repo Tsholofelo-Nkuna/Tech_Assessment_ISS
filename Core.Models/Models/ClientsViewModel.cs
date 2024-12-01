@@ -1,6 +1,7 @@
 ﻿
 using Core.Presentation.Models.DataTransferObjects;
-using Core.Presentation.Models.Models.Base;
+using Core.Presentation.Models.Base;
+using Microsoft.AspNetCore.Http.Extensions;
 
 
 namespace Core.Presentation.Models
@@ -9,8 +10,10 @@ namespace Core.Presentation.Models
     {
         public ClientsViewModel() : this(Enumerable.Empty<ClientDto>()){ }
         public ClientsViewModel(IEnumerable<ClientDto> clients): base(clients)
-        {}
-        public FormComponentViewModel<ClientDto> SearchFormComponentViewModel { get; set; } = new FormComponentViewModel<ClientDto>(Enumerable.Empty<ClientDto>().Append(new ClientDto()))
+        {
+            this.TableConfig.Filter = this.SearchFormComponentViewModel.ViewModelState.FirstOrDefault() ?? new ClientDto();
+        }
+        public FormComponentViewModel<ClientDto> SearchFormComponentViewModel { get; set; } = new FormComponentViewModel<ClientDto>(Enumerable.Empty<ClientDto>().Append(new ClientDto()), "ClientSearchForm")
         {
             ColClass = "col-4",
             SubmitButtonText = "Filter",
@@ -50,7 +53,7 @@ namespace Core.Presentation.Models
             ViewController = "",
         };
 
-        public FormComponentViewModel<ClientDto> NewClientFormViewModel { get; set; } = new(Enumerable.Empty<ClientDto>().Append(new ClientDto()))
+        public FormComponentViewModel<ClientDto> NewClientFormViewModel { get; set; } = new(Enumerable.Empty<ClientDto>().Append(new ClientDto()), "NewClientForm")
         {
             Fields = new()
             {
@@ -91,9 +94,9 @@ namespace Core.Presentation.Models
             ControllerName = "Home",
             HttpMethod = "post",
            
-            CollapseFooter = true,
+            CollapseFooter = false,
         };
-        public FormComponentViewModel<ClientDto> PrimaryContactFormViewModel { get; set; } = new (Enumerable.Empty<ClientDto>().Append(new ClientDto()))
+        public FormComponentViewModel<ClientDto> PrimaryContactFormViewModel { get; set; } = new (Enumerable.Empty<ClientDto>().Append(new ClientDto()), "ClientContactForm")
         {
             Fields = new()
             {
@@ -121,8 +124,10 @@ namespace Core.Presentation.Models
             ActionName = string.Empty, //nameof(HomeController.AddOrUpdate),
             ControllerName = "Home",
             HttpMethod = "post",
-            CollapseFooter = true,
+            CollapseFooter = false,
         };
         public ModalViewModel<ClientDto> ModalViewModel { get; set; } = new ModalViewModel<ClientDto>();
+   
+      
     }
 }

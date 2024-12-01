@@ -1,7 +1,7 @@
 ﻿
 
 using Core.Presentation.Models.DataTransferObjects.Base;
-using Core.Presentation.Models.Models.Base;
+using Core.Presentation.Models.Base;
 
 namespace Core.Presentation.Models
 {

@@ -1,7 +1,6 @@
 ﻿
 using Core.Presentation.Models.DataTransferObjects;
-using Core.Presentation.Models.DataTransferObjects.Base;
-using Core.Presentation.Models.Models.Base;
+using Core.Presentation.Models.Base;
 
 namespace Core.Presentation.Models
 {
@@ -11,8 +10,8 @@ namespace Core.Presentation.Models
         public ClientDetailsViewModel(): this(Enumerable.Empty<ClientDto>()) {  }
         public ClientDetailsViewModel(IEnumerable<ClientDto> client): base(client) {
 
-            this.DetailsFormViewModel = new(Enumerable.Empty<ClientDto>().Append(new ClientDto()));
-            this.PrimaryContactPersonFormViewModel = new(Enumerable.Empty<ClientDto>().Append(new ClientDto()));
+            this.DetailsFormViewModel = new(Enumerable.Empty<ClientDto>().Append(new ClientDto()), "ClientDetailsForm");
+            this.PrimaryContactPersonFormViewModel = new(Enumerable.Empty<ClientDto>().Append(new ClientDto()), "ClientDetailsContactForm");
             this.DetailsFormViewModel.CollapseFooter = false;
             this.PrimaryContactPersonFormViewModel.CollapseFooter = false;
             this.PrimaryContactPersonFormViewModel.IncludeFormStatePropsAsHidden = true;
@@ -22,7 +21,6 @@ namespace Core.Presentation.Models
             this.DetailsFormViewModel.ColClass = "col-12";
            
         }
-
 
         public FormComponentViewModel<ClientDto> DetailsFormViewModel { get; set; }
         public FormComponentViewModel<ClientDto> PrimaryContactPersonFormViewModel { get; set; }

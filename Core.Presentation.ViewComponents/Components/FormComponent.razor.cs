@@ -12,6 +12,8 @@ namespace Core.Presentation.ViewComponents.Components
 
         [Parameter] 
         public EventCallback<IEnumerable<TRecord>> ViewModelStateChanged { get; set; } = new EventCallback<IEnumerable<TRecord>>();
+        [Parameter]
+        public EventCallback<IEnumerable<TRecord>> OnFormSubmitClick { get; set; } = new EventCallback<IEnumerable<TRecord>>();
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -23,9 +25,14 @@ namespace Core.Presentation.ViewComponents.Components
 
         public override async Task OnViewModelStateChanged(IEnumerable<TRecord> update)
         {
-            base.OnViewModelStateChanged(update);
+            await base.OnViewModelStateChanged(update);
             await ViewModelStateChanged.InvokeAsync(update);
             
+        }
+
+        public async Task OnFormSubmit()
+        {
+            await OnFormSubmitClick.InvokeAsync(this.ViewModel.ViewModelState);
         }
 
 

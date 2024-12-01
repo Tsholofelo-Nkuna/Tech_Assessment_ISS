@@ -1,6 +1,6 @@
 ﻿@using Core.Presentation.Models
 @using Core.Presentation.Models.DataTransferObjects.Base
-@using Core.Presentation.Models.Models.Base
+@using  Core.Presentation.Models.Base
 @using Core.Presentation.ViewComponents.Components.Base
 @using Microsoft.AspNetCore.Components.Forms
 @typeparam TRecord where TRecord: BaseDto, new()
@@ -8,8 +8,9 @@
 
 @foreach(var sourceRecord in this.ViewModel.ViewModelState)
 {
-    <form class="card" method="@this.ViewModel.HttpMethod">
-          <AntiforgeryToken/>
+   
+    <div class="card">
+        
         @{
 
             if (ViewModel.IncludeFormStatePropsAsHidden)
@@ -78,8 +79,12 @@
         @if (!ViewModel.CollapseFooter)
         {
             <div class="card-footer">
-                <button class="btn btn-primary">@ViewModel.SubmitButtonText</button>
+                <button @onclick="()=>this.OnFormSubmit()" class="btn btn-primary">@ViewModel.SubmitButtonText</button>
+                <button type="reset" class="btn btn-outline-secondary">Reset</button>
             </div>
-        }
-    </form>
+        } 
+    </div>
+    <script>
+
+    </script>
 }
