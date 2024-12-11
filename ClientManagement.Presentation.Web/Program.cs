@@ -13,6 +13,11 @@ namespace ClientManagement.Presentation.Web
 
             // Add services to the container.
             builder.Services.AddDbContext<WebDbContext>(c => c.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+            builder.Services.AddHttpClient("AppApi",config =>
+            {
+                config.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"]);
+            });
+            builder.Services.AddControllers();
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
             builder.Services.AddBusinessServices();
@@ -30,7 +35,7 @@ namespace ClientManagement.Presentation.Web
 
             app.UseStaticFiles();
             app.UseAntiforgery();
-
+            app.MapControllers();
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
 

@@ -1,21 +1,22 @@
 ﻿using Core.Presentation.Models.DataTransferObjects;
-using Core.Presentation.Models.Models.Base;
+using Core.Presentation.Models.Base;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Presentation.Models;
 
 namespace ClientManagement.UnitTests.DataProviders
 {
-    public static class GenericComponentTestsDataProvider
+    public static class FormComponentTestsDataProvider
     {
-        public static IEnumerable<TestCaseData>GenericComponentWorks_DP()
+        public static IEnumerable<TestCaseData>FormComponentWorks_DP()
         {
             yield return new TestCaseData(
-                new GenericListViewModel<ContactPersonDto>(Enumerable.Empty<ContactPersonDto>().Append(new ContactPersonDto())),
-                new ContactPersonDto { Archived = true, Email = "tgnkuna768@gmail.com"},
+                new GenericListViewModel<ClientDto>(Enumerable.Empty<ClientDto>().Append(new ClientDto())),
+                new ClientDto { Archived = true, PrimaryContactEmail = "tgnkuna768@gmail.com"},
                 "tgnkuna768@gmail.com",
                 true
                 )

@@ -24,7 +24,10 @@ namespace Core.Presentation.ViewComponents.Components.Base
 
         [Inject]
         public NavigationManager NavManager { get; set; }
+        [Inject] private IHttpClientFactory _httpClientFactory {  get; set; }
       
+        public HttpClient AppApi => _httpClientFactory.CreateClient("AppApi");
+        public virtual string BaseUrl { get; set; } = string.Empty;
         public GenericComponentBase() : this(new TViewModel()) { }
         public GenericComponentBase(TViewModel viewModel)
         {

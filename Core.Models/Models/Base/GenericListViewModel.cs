@@ -39,14 +39,9 @@ namespace Core.Presentation.Models.Base
             {
                 _genericViewModel.ViewModelState = target;
                 _genericViewModel.Set(propName, value);
-                this.OnViewModelStateChangedEvent.Invoke(this.ViewModelState);
+                this.OnViewModelStateChangedEvent?.Invoke(this.ViewModelState);
             }
 
-        }
-
-        public Task OnViewModelStateChanged(IEnumerable<TRecordType> updated)
-        {
-            throw new NotImplementedException();
         }
 
         public void AddViewModelStateChangeListener(IGenericListViewModel<TRecordType>.OnViewModelStateChangeDelegate listener)

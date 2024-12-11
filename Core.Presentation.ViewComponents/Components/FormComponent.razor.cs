@@ -4,6 +4,7 @@ using Core.Presentation.ViewComponents.Components.Base;
 using Core.Presentation.ViewComponents.Interfaces;
 using Core.Presentation.ViewComponents.Interfaces.Base;
 using Microsoft.AspNetCore.Components;
+using System;
 
 namespace Core.Presentation.ViewComponents.Components
 {
@@ -13,15 +14,35 @@ namespace Core.Presentation.ViewComponents.Components
         [Parameter] 
         public EventCallback<IEnumerable<TRecord>> ViewModelStateChanged { get; set; } = new EventCallback<IEnumerable<TRecord>>();
         [Parameter]
-        public EventCallback<IEnumerable<TRecord>> OnFormSubmitClick { get; set; } = new EventCallback<IEnumerable<TRecord>>();
+        public Func<IEnumerable<TRecord>, Task>? OnFormSubmitClick { get; set; }
+
+        [Parameter]
+        public Action<KeyValuePair<string, string>?>? OnValidationFail { get; set; }
+        public bool IsValid { 
+            get
+            {
+                var result = Enumerable.Empty<KeyValuePair<string, string>?>();
+                foreach(var rec in this.ViewModel.ViewModelState)
+                {
+                    foreach(var fieldConfig in this.ViewModel.Fields)
+                    {
+                        if (fieldConfig.Validator is not null)
+                        {
+                            result.Append(fieldConfig.Validator.Validate(rec));
+                        }
+                        
+                    }
+                    
+                }
+                return result.All(x => x == null);  
+            }
+        }
         protected override void OnInitialized()
         {
             base.OnInitialized();
             this.ViewModel.AddViewModelStateChangeListener(this.OnViewModelStateChanged); 
         }
-        public void FormSubmitClick()
-        {
-        }
+      
 
         public override async Task OnViewModelStateChanged(IEnumerable<TRecord> update)
         {
@@ -30,9 +51,37 @@ namespace Core.Presentation.ViewComponents.Components
             
         }
 
-        public async Task OnFormSubmit()
+        public void OnInputChange(Guid id, InputFieldViewModel<TRecord> field, object? value)
         {
-            await OnFormSubmitClick.InvokeAsync(this.ViewModel.ViewModelState);
+           this.ViewModel.IsValid = this.IsValid;
+           if(field.Validator is not null)
+            {
+                var validationResult = field.Validator.Validate(this.ViewModel?.ViewModelState?.FirstOrDefault());
+                if(validationResult is null)
+                {
+                    ViewModel.Set(id, field.Name, value);
+                }
+                else
+                {
+                   
+                    if(this.OnValidationFail is not null)
+                    {
+                        this.OnValidationFail(validationResult);
+                    }
+                }
+                this.ViewModel.WasValidated = true;
+            }
+            else
+            {
+                ViewModel.Set(id, field.Name, value);
+            }
+        }
+
+        public Task OnFormSubmit()
+        {
+            this.ViewModel.IsValid = this.IsValid;  
+            OnFormSubmitClick?.Invoke(this.ViewModel.ViewModelState);
+            return Task.CompletedTask;
         }
 
 

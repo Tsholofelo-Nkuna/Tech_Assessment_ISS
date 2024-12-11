@@ -8,25 +8,29 @@
 
 @foreach(var sourceRecord in this.ViewModel.ViewModelState)
 {
-   
-    <div class="card">
-        
-        @{
 
-            if (ViewModel.IncludeFormStatePropsAsHidden)
-            {
-                foreach (var formStateKeyVal in this.RecordAsKeyValuePairs(sourceRecord).Where(kv => !ViewModel.Fields.Any(field => kv.Key == field.Name)))
+    <div class="card">
+
+        <div class="card-body @(ViewModel.WasValidated ? "was-validated": string.Empty)" id="@ViewModel.FormName">
+          
+            @{
+
+                if (ViewModel.IncludeFormStatePropsAsHidden)
                 {
-                    <input type="hidden" name="@formStateKeyVal.Key" value="@formStateKeyVal.Value" />
+                    foreach (var formStateKeyVal in this.RecordAsKeyValuePairs(sourceRecord).Where(kv => !ViewModel.Fields.Any(field => kv.Key == field.Name)))
+                    {
+
+                        <input type="hidden" name="@formStateKeyVal.Key" value="@formStateKeyVal.Value" />
+                    }
                 }
             }
-        }
-        <div class="card-body">
             <div class="row gx-5 gy-3">
                 @foreach (var field in ViewModel.Fields)
                 {
                     <div class="@ViewModel.ColClass">
-
+                        @{
+                            var isRequiredField = (field.Validator?.Validators?.Any(x => x.Name == "Required") ?? false);
+                        }
                         @switch (field.ControlType)
                         {
                             case ControlType.Input:
@@ -34,40 +38,31 @@
                                 <div class="row">
                                     <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
                                     <div class="col">
-                                        @if (!field.Required)
-                                        {
-                                            <input class="form-control" 
-                                            name="@field.Name" 
-                                            value="@ViewModel.Get(sourceRecord.Id, field.Name, typeof(string))"
-                                            @onchange = "async (eventArgs) => { ViewModel.Set(sourceRecord.Id, field.Name, eventArgs.Value); }"/>
-                                        }
-                                        else
-                                        {
-                                            <input
-                                                required 
-                                                class="form-control" 
-                                                name="@field.Name" 
-                                                value="@ViewModel.Get(sourceRecord.Id, field.Name, typeof(string))"
-                                                @onchange="async (eventArgs) => { ViewModel.Set(sourceRecord.Id, field.Name, eventArgs.Value); }" />
-                                            <div class="invalid-feedback">This field is required</div>
-                                        }
-
+                                   
+                                        <input required="@isRequiredField"
+                                               class="form-control"
+                                               name="@field.Name"
+                                               value="@ViewModel.Get(sourceRecord.Id, field.Name, typeof(string))"
+                                               type="@field.Type"
+                                               @onchange="(eventArgs) => { this.OnInputChange(sourceRecord.Id, field, eventArgs.Value);}" />
+                                        <div class="invalid-feedback">This field is required</div>
                                     </div>
                                 </div>
 
                                 break;
                             case ControlType.Checkbox:
-
+                                
                                 <div class="row">
                                     <div class="col-auto text-end"><label class="form-label">@field.Label</label></div>
                                     @if (ViewModel.Get(sourceRecord.Id,field.Name, typeof(bool)))
                                     {
-                                        <div class="col-auto text-start"> <input @oninput="async (eventArgs) => { ViewModel.Set(sourceRecord.Id, field.Name, eventArgs.Value); }" checked type="checkbox" class="form-check-input" name="@field.Name"/></div>
+                                        <div class="col-auto text-start"> <input @oninput = "(e) => { this.ViewModel.Set(sourceRecord.Id, field.Name, e.Value); }" checked type="checkbox" class="form-check-input" name="@field.Name" value="@bool.TrueString"/></div>
                                     }
                                     else
                                     {
-                                        <div class="col-auto text-start"> <input type="checkbox" @oninput="async (eventArgs) => { ViewModel.Set(sourceRecord.Id, field.Name, eventArgs.Value); }" class=" form-check-input" name="@field.Name" /></div>
-                                    }
+
+                                        <div class="col-auto text-start"> <input @oninput="(e) => { this.ViewModel.Set(sourceRecord.Id, field.Name, e.Value); }" type="checkbox" class=" form-check-input" name="@field.Name" value="@bool.TrueString" /></div>
+                                    } 
 
                                 </div>
                                 break;
@@ -75,14 +70,15 @@
                     </div>
                 }
             </div>
+            @if (!ViewModel.CollapseFooter || true)
+            {
+                <div class="card-footer">
+                    <button @onclick = "OnFormSubmit" class="btn btn-primary">@ViewModel.SubmitButtonText</button>
+                    <button   type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            }
         </div>
-        @if (!ViewModel.CollapseFooter)
-        {
-            <div class="card-footer">
-                <button @onclick="()=>this.OnFormSubmit()" class="btn btn-primary">@ViewModel.SubmitButtonText</button>
-                <button type="reset" class="btn btn-outline-secondary">Reset</button>
-            </div>
-        } 
+       
     </div>
     <script>
 

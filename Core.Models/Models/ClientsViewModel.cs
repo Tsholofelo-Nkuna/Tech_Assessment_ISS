@@ -2,6 +2,9 @@
 using Core.Presentation.Models.DataTransferObjects;
 using Core.Presentation.Models.Base;
 using Microsoft.AspNetCore.Http.Extensions;
+using Core.Presentation.Models.Validators.Base;
+using Core.Presentation.Models.Validators;
+using Core.Presentation.Models.DataTransferObjects.Base;
 
 
 namespace Core.Presentation.Models
@@ -18,22 +21,23 @@ namespace Core.Presentation.Models
             ColClass = "col-4",
             SubmitButtonText = "Filter",
             Fields = new(){
-                new InputFieldViewModel()
+
+                new InputFieldViewModel<ClientDto>(
+                    nameof(ClientDto.CompanyName),
+                    "Company Name"
+                    ),
+
+                new InputFieldViewModel<ClientDto>(
+                    nameof(ClientDto.Archived),
+                    "Show Archived Only"
+                    
+                    )
                 {
-                    Label = "Company Name",
-                    Name = "CompanyName",
-                },
-                new InputFieldViewModel()
-                {
-                    Label = "Show Archived Only",
-                    Name = "Archived",
                     ControlType = ControlType.Checkbox,
                 }
             },
-            HttpMethod = "post",
             ActionName = string.Empty, //nameof(HomeController.Index),
             ControllerName = "Home",
-           
         };
        
         public TableComponentViewModel<ClientDto> TableConfig { get; set; } = new TableComponentViewModel<ClientDto>(new List<ClientDto>()){
@@ -55,76 +59,68 @@ namespace Core.Presentation.Models
 
         public FormComponentViewModel<ClientDto> NewClientFormViewModel { get; set; } = new(Enumerable.Empty<ClientDto>().Append(new ClientDto()), "NewClientForm")
         {
+            FormName = "NewClientDetails",
             Fields = new()
             {
 
-                new InputFieldViewModel()
-                {
-                    Label = "Company Name",
-                    Name = nameof(ClientDto.CompanyName),
-                    Required = true,
-                },
-                new InputFieldViewModel()
-                {
-                    Label = "Trading As",
-                    Name = nameof(ClientDto.TradingAs),
-                    Required = true,
-                },
-                new InputFieldViewModel()
-                {
-                    Label = "Landline No",
-                    Name = nameof(ClientDto.LandlineNumber),
-                    Required = true,
-                },
-                new InputFieldViewModel()
-                {
-                    Label = "Province",
-                    Name = nameof(ClientDto.Province),
-                    Required = true,
-                },
-                new InputFieldViewModel()
-                {
-                    Label = "Address",
-                    Name = nameof(ClientDto.Address),
-                    Required = true,
-                }
+                new InputFieldViewModel<ClientDto>(
+                    nameof(ClientDto.CompanyName), 
+                    "Company Name",
+                    new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required()}, nameof(ClientDto.CompanyName))
+                    ),
+                new InputFieldViewModel<ClientDto>(
+                    nameof(ClientDto.TradingAs),
+                    "Trading As",
+                    new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required()}, nameof(ClientDto.TradingAs))
+                    ),
+                 new InputFieldViewModel<ClientDto>(
+                    nameof(ClientDto.LandlineNumber),
+                    "Landline No",
+                    new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required()}, nameof(ClientDto.LandlineNumber))
+                    ),
+                 new InputFieldViewModel<ClientDto>(
+                    nameof(ClientDto.Province),
+                    "Province",
+                    new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required()}, nameof(ClientDto.Province))
+                    ),
+                 new InputFieldViewModel<ClientDto>(
+                    nameof(ClientDto.Address),
+                    "Address",
+                    new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required()}, nameof(ClientDto.Address))
+                    ),
             },
             ColClass = "col-12",
-            ActionName = string.Empty,//nameof(HomeController.AddOrUpdate),
+            ActionName = "/",//nameof(HomeController.AddOrUpdate),
             ControllerName = "Home",
-            HttpMethod = "post",
-           
-            CollapseFooter = false,
+            CollapseFooter = true,
         };
         public FormComponentViewModel<ClientDto> PrimaryContactFormViewModel { get; set; } = new (Enumerable.Empty<ClientDto>().Append(new ClientDto()), "ClientContactForm")
         {
             Fields = new()
             {
 
-                new InputFieldViewModel()
-                {
-                    Label = "Name",
-                    Name = nameof(ClientDto.PrimaryContactName),
-                    Required = true,
-                },
-                new InputFieldViewModel()
-                {
-                    Label = "Email",
-                    Name = nameof(ClientDto.PrimaryContactEmail),
-                    Required = true,
-                },
-                new InputFieldViewModel()
-                {
-                    Label = "Contact",
-                    Name = nameof(ClientDto.PrimaryContactPhone),
-                    Required = true,
-                }
+                new InputFieldViewModel<ClientDto>(
+                    nameof(ClientDto.PrimaryContactName),
+                    "Name",
+                    new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required()}, nameof(ClientDto.PrimaryContactName))
+                    ),
+                new InputFieldViewModel<ClientDto>(
+                    nameof(ClientDto.PrimaryContactEmail),
+                    "Email",
+                    new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required(), Validators.Validators.Email()}, nameof(ClientDto.PrimaryContactEmail))
+                    ),
+                new InputFieldViewModel<ClientDto>(
+                    nameof(ClientDto.PrimaryContactPhone),
+                    "Contact",
+                    new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required()}, nameof(ClientDto.PrimaryContactPhone))
+                    ),
             },
             ColClass = "col-12",
             ActionName = string.Empty, //nameof(HomeController.AddOrUpdate),
             ControllerName = "Home",
-            HttpMethod = "post",
-            CollapseFooter = false,
+          
+            CollapseFooter = true,
+            
         };
         public ModalViewModel<ClientDto> ModalViewModel { get; set; } = new ModalViewModel<ClientDto>();
    
