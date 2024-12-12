@@ -40,7 +40,7 @@
                     }
                     <td>
                         <div class="d-flex">
-                            <a href="@($"/{ViewModel.DeleteController}/{ViewModel.DeleteAction}/{rec.Id}")" class="btn btn-danger me-2">Delete</a>
+                            <a @onclick="() => OnDelete(rec.Id)" class="btn btn-danger me-2">Delete</a>
                             @if (!rec.Archived)
                             {
                                 <a href="@($"/{ViewModel.ArchiveController}/{ViewModel.ArchiveAction}/{rec.Id}")" class="btn btn-secondary me-2">Archive</a>

@@ -3,6 +3,7 @@ using Core.Presentation.Models.DataTransferObjects.Base;
 using Core.Presentation.ViewComponents.Components.Base;
 using Microsoft.AspNetCore.Components;
 using System.Globalization;
+using System.Net.Http.Json;
 
 namespace Core.Presentation.ViewComponents.Components
 {
@@ -13,10 +14,20 @@ namespace Core.Presentation.ViewComponents.Components
     {
         [Parameter]
         public Func<Guid, Task>? OnViewClick { get; set; }
+        [Parameter]
+        public Func<bool, Task>? OnDeleteClick { get; set; }
         public void OnView(Guid recordId) {
             this.NavManager.NavigateTo($"{this.ViewModel.ViewController}/{this.ViewModel.ViewAction}/{recordId}");
             OnViewClick?.Invoke(recordId);
-           
+        }
+
+        public async Task OnDelete(Guid id)
+        {
+            var response = await this.AppApi.GetAsync($"api/{this.ViewModel.DeleteController}/{this.ViewModel.DeleteAction}/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                OnDeleteClick?.Invoke(await response.Content.ReadFromJsonAsync<bool>());
+            }
         }
 
         public TableComponent() { }

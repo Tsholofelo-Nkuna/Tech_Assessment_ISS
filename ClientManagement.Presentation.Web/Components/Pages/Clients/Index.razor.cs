@@ -78,6 +78,14 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
           // this.NavManager.NavigateTo(this.)
 
         }
+
+        public async Task onDeleteTableRecord(bool deleted)
+        {
+            if (deleted)
+            {
+                this.GetData(this.SearchFormFilters);
+            }
+        }
         public ClientDto SearchFormFilters {
             get {
              return this.ViewModel.SearchFormComponentViewModel.ViewModelState?.FirstOrDefault() ?? new ClientDto();

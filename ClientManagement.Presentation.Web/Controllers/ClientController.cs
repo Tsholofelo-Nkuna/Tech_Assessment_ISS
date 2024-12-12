@@ -42,14 +42,15 @@ namespace ClientManagement.Presentation.Web.Controllers
             return await this._clientService.AddOrUpdate(value);
         }
 
-        // PUT api/<ClientController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // GET api/Archive/5
+        [HttpGet("[action]/{id}")]
+        public async Task<bool> Archive(Guid id)
         {
+          return  await this._clientService.Archive(new[] { id });
         }
 
-        // DELETE api/<ClientController>/5
-        [HttpPost("[action]/{id}")]
+        // DELETE api/Delete/5
+        [HttpGet("[action]/{id}")]
         public async Task<bool> Delete(Guid id)
         {
            return await _clientService.Delete(new[] { id });

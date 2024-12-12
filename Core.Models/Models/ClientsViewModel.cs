@@ -50,9 +50,9 @@ namespace Core.Presentation.Models
                 new TableComponentColumnConfig() { Index = nameof(ClientDto.Address), Name = "Address"}
             },
             DeleteAction = "Delete",//nameof(HomeController.Delete),
-            DeleteController = "",
+            DeleteController = "Client",
             ArchiveAction = "Archive", //nameof(HomeController.Archive),
-            ArchiveController = "",
+            ArchiveController = "Client",
             ViewAction = "Details",//nameof(HomeController.Details),
             ViewController = "",
         };
