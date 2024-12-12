@@ -1,14 +1,13 @@
 ﻿using Core.Presentation.Models.DataTransferObjects;
-using Microsoft.AspNetCore.Components;
+
 using Microsoft.AspNetCore.Mvc;
 using Question3.BusinessLogicLayer.Interfaces;
-using Question3.BusinessLogicLayer.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ClientManagement.Presentation.Web.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
     {

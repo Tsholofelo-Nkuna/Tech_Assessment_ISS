@@ -75,8 +75,7 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
 
         public async Task OnViewTableRecord(Guid recordId)
         {
-          // this.NavManager.NavigateTo(this.)
-
+            this.NavManager.NavigateTo($"{this.ViewModel.TableConfig.ViewController}/{this.ViewModel.TableConfig.ViewAction}/{recordId}?{nameof(ClientDto.Archived)}={this.SearchFormFilters.Archived}");
         }
 
         public async Task OnArchiveTableRecord(bool archived)

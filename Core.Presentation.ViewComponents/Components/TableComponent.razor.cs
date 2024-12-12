@@ -19,7 +19,6 @@ namespace Core.Presentation.ViewComponents.Components
         [Parameter]
         public Func<bool , Task>? OnArchiveClick { get; set; }
         public void OnView(Guid recordId) {
-            this.NavManager.NavigateTo($"{this.ViewModel.ViewController}/{this.ViewModel.ViewAction}/{recordId}");
             OnViewClick?.Invoke(recordId);
         }
 

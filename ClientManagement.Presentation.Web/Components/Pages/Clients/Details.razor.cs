@@ -23,7 +23,6 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
             this.ViewModel.ViewModelState = this.ClientService.Get(new ClientDto { Id = Id, Archived = this.Archived});
             this.ViewModel.PrimaryContactPersonFormViewModel.ViewModelState = this.ViewModel.ViewModelState;
             this.ViewModel.DetailsFormViewModel.ViewModelState = this.ViewModel.ViewModelState;
-           
             await base.OnInitializedAsync();
         }
     }
