@@ -24,7 +24,7 @@ namespace Core.Presentation.Models
         public string ControllerName { get; set; } = string.Empty;
         [Obsolete("Do not use.")]
         public string HttpMethod { get; set; } = "post";
-        public bool CollapseFooter { get; set; } = true;
+        public bool CollapseFooter { get; set; }
         public bool IncludeFormStatePropsAsHidden {  get; set; }
         public bool WasValidated { get; set; }
         public bool IsValid { get; set; }

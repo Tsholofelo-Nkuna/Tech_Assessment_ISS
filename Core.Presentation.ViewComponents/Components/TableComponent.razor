@@ -45,7 +45,7 @@
                             {
                                 <a href="@($"/{ViewModel.ArchiveController}/{ViewModel.ArchiveAction}/{rec.Id}")" class="btn btn-secondary me-2">Archive</a>
                             }
-                            <a href="@ViewLink(rec.Id)" class="btn btn-outline-primary me-2">View</a>
+                            <a @onclick="() => OnView(rec.Id)" class="btn btn-outline-primary me-2">View</a>
                         </div>
                     </td>
                 </tr>

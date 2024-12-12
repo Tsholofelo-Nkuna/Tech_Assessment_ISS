@@ -6,6 +6,7 @@ using Question3.DataAccessLayer;
 using Question3.DataAccessLayer.Entities;
 using Core.Presentation.Models.DataTransferObjects;
 using System.Linq.Expressions;
+using System.IO.MemoryMappedFiles;
 
 
 namespace Question3.BusinessLogicLayer.Services
@@ -71,6 +72,9 @@ namespace Question3.BusinessLogicLayer.Services
             if(filter.CompanyName?.Trim() is string validCompanyName and { Length: > 0 })
             {
                 query = query.Where(x => x.CompanyName.Contains(filter.CompanyName));
+            }
+            if (filter.Id != Guid.Empty) { 
+               query = query.Where(x => x.Id == filter.Id);
             }
             var returned = this._mapper.Map<List<ClientDto>>(query.Include(x => x.ContactPerson).OrderByDescending(x => x.CreatedOn).ToList());
             returned.ForEach(x =>

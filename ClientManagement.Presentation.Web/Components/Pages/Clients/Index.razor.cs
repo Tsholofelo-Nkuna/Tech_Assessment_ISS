@@ -19,20 +19,17 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
         {
             await base.OnInitializedAsync();
             this.BaseUrl = "api/client";
-            this.GetData();
+            this.GetData(this.SearchFormFilters);
            
         }
 
 
-        private async void GetData()
+        private async void GetData(ClientDto filters)
         {
             try
             {
 
-                var qBuilder = new QueryBuilder();
-                var filters = this.ViewModel.SearchFormComponentViewModel.ViewModelState.FirstOrDefault() ?? new ClientDto();
-               
-                var qString = qBuilder.ToString();
+            
                 var url = $"{this.BaseUrl}/Get";
 
                 var response = await this.AppApi.PostAsJsonAsync(url, filters);
@@ -64,7 +61,7 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
                 var response = await this.AppApi.PostAsJsonAsync(this.BaseUrl, newC);
                 if (response.IsSuccessStatusCode &&  await response.Content.ReadFromJsonAsync<bool>())
                 {
-                    this.GetData();
+                    this.GetData(this.SearchFormFilters);
                 }
 
             }
@@ -73,9 +70,14 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
 
         public async Task OnSubmitSearchFilters(IEnumerable<ClientDto> searchFilters)
         {
-            this.GetData();
+            this.GetData(this.SearchFormFilters);
         }
 
+        public async Task OnViewTableRecord(Guid recordId)
+        {
+          // this.NavManager.NavigateTo(this.)
+
+        }
         public ClientDto SearchFormFilters {
             get {
              return this.ViewModel.SearchFormComponentViewModel.ViewModelState?.FirstOrDefault() ?? new ClientDto();

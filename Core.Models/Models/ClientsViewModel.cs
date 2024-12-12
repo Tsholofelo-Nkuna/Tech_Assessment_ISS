@@ -103,17 +103,17 @@ namespace Core.Presentation.Models
                     nameof(ClientDto.PrimaryContactName),
                     "Name",
                     new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required()}, nameof(ClientDto.PrimaryContactName))
-                    ),
+                    ) { Type = "text"},
                 new InputFieldViewModel<ClientDto>(
                     nameof(ClientDto.PrimaryContactEmail),
                     "Email",
-                    new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required(), Validators.Validators.Email()}, nameof(ClientDto.PrimaryContactEmail))
-                    ),
+                    new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required()}, nameof(ClientDto.PrimaryContactEmail))
+                    ) {Type = "email"},
                 new InputFieldViewModel<ClientDto>(
                     nameof(ClientDto.PrimaryContactPhone),
                     "Contact",
                     new ValidatorBase<ClientDto>(new ValidatorFn[] { Validators.Validators.Required()}, nameof(ClientDto.PrimaryContactPhone))
-                    ),
+                    ){ Type = "text"},
             },
             ColClass = "col-12",
             ActionName = string.Empty, //nameof(HomeController.AddOrUpdate),

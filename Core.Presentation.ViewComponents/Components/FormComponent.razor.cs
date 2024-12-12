@@ -53,13 +53,14 @@ namespace Core.Presentation.ViewComponents.Components
 
         public void OnInputChange(Guid id, InputFieldViewModel<TRecord> field, object? value)
         {
-           this.ViewModel.IsValid = this.IsValid;
+            ViewModel.Set(id, field.Name, value);
+            this.ViewModel.IsValid = this.IsValid;
            if(field.Validator is not null)
             {
                 var validationResult = field.Validator.Validate(this.ViewModel?.ViewModelState?.FirstOrDefault());
                 if(validationResult is null)
                 {
-                    ViewModel.Set(id, field.Name, value);
+                    //validation succeeded;
                 }
                 else
                 {

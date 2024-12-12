@@ -37,7 +37,7 @@ namespace ClientManagement.Presentation.Web.Controllers
 
         // POST api/<ClientController>
         [HttpPost]
-        public async Task<bool> Post([FromForm] ClientDto value)
+        public async Task<bool> Post(ClientDto value)
         {
             return await this._clientService.AddOrUpdate(value);
         }
