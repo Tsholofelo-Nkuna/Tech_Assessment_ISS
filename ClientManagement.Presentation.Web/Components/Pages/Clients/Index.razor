@@ -19,7 +19,8 @@
      <TableComponent 
          ViewModel="ViewModel.TableConfig"
          OnViewClick="OnViewTableRecord"
-         OnDeleteClick="onDeleteTableRecord"
+         OnDeleteClick="OnDeleteTableRecord"
+         OnArchiveClick="OnArchiveTableRecord"
      >
      </TableComponent>
     </div>
@@ -36,8 +37,13 @@
             </div>
         </Body>
         <Footer>
-            <button 
-                @onclick=" async (eventArgs) => {  await this.OnNewClientFormSubmitted(ViewModel.NewClientFormViewModel.ViewModelState.FirstOrDefault(), ViewModel.PrimaryContactFormViewModel.ViewModelState.FirstOrDefault());}" 
+            <button @onclick=" async (eventArgs) => { this.ViewModel.ModalViewModel.Show = false;  await this.OnNewClientFormSubmitted(ViewModel.NewClientFormViewModel.ViewModelState.FirstOrDefault(), ViewModel.PrimaryContactFormViewModel.ViewModelState.FirstOrDefault());}"
                 class="btn btn-primary">Submit</button>
         </Footer>
     </ModalComponent>
+
+    <script>
+        function reloadPage(){
+            alert();
+        }
+    </script>

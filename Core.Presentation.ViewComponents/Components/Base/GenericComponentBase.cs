@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.JSInterop;
 
 namespace Core.Presentation.ViewComponents.Components.Base
 {
@@ -28,6 +29,7 @@ namespace Core.Presentation.ViewComponents.Components.Base
       
         public HttpClient AppApi => _httpClientFactory.CreateClient("AppApi");
         public virtual string BaseUrl { get; set; } = string.Empty;
+        [Inject] public IJSRuntime JS { get; set; }
         public GenericComponentBase() : this(new TViewModel()) { }
         public GenericComponentBase(TViewModel viewModel)
         {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.JSInterop;
 
 namespace Core.Presentation.ViewComponents.Interfaces.Base
 {
@@ -16,6 +17,7 @@ namespace Core.Presentation.ViewComponents.Interfaces.Base
     {
         TViewModel ViewModel { get; set; }
         NavigationManager NavManager { get; set; }
+        IJSRuntime JS { get; set; }
         public void OnNavigate(string controllerName, string actionName, Guid stateId);
         public Task OnViewModelStateChanged(IEnumerable<TRecordType> update);
         public IEnumerable<KeyValuePair<string, object?>> RecordAsKeyValuePairs(TRecordType record);

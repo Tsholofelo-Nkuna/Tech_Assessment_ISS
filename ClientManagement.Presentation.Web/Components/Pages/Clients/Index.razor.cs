@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.JSInterop;
 using Question3.BusinessLogicLayer.Interfaces;
 
 namespace ClientManagement.Presentation.Web.Components.Pages.Clients
@@ -14,7 +15,6 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
        
         [SupplyParameterFromForm(FormName = "NewClientDetails")]
         public ClientDto? NewClientDetails { get; set; }
-      
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -22,7 +22,6 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
             this.GetData(this.SearchFormFilters);
            
         }
-
 
         private async void GetData(ClientDto filters)
         {
@@ -50,6 +49,7 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
 
         public async Task OnNewClientFormSubmitted(ClientDto? details, ClientDto? primaryContact)
         {
+           
             
             if (details is ClientDto newC && primaryContact is ClientDto contactInfo 
                 && this.ViewModel.PrimaryContactFormViewModel.IsValid 
@@ -58,10 +58,12 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
                 newC.PrimaryContactName = contactInfo.PrimaryContactName;
                 newC.PrimaryContactPhone = contactInfo.PrimaryContactPhone;
                 newC.PrimaryContactEmail = contactInfo.PrimaryContactEmail;
+                this.ViewModel.ModalViewModel.Show = false;
+              
                 var response = await this.AppApi.PostAsJsonAsync(this.BaseUrl, newC);
                 if (response.IsSuccessStatusCode &&  await response.Content.ReadFromJsonAsync<bool>())
                 {
-                    this.GetData(this.SearchFormFilters);
+                    await JS.InvokeVoidAsync("window.location.reload");  
                 }
 
             }
@@ -85,7 +87,7 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
             }
         }
 
-        public async Task onDeleteTableRecord(bool deleted)
+        public async Task OnDeleteTableRecord(bool deleted)
         {
             if (deleted)
             {

@@ -38,6 +38,7 @@ namespace Core.Presentation.Models
             },
             ActionName = string.Empty, //nameof(HomeController.Index),
             ControllerName = "Home",
+            FormName = "ClientSearchForm"
         };
        
         public TableComponentViewModel<ClientDto> TableConfig { get; set; } = new TableComponentViewModel<ClientDto>(new List<ClientDto>()){
@@ -120,6 +121,7 @@ namespace Core.Presentation.Models
             ControllerName = "Home",
           
             CollapseFooter = true,
+            FormName = "NewClientPrimaryContactForm"
             
         };
         public ModalViewModel<ClientDto> ModalViewModel { get; set; } = new ModalViewModel<ClientDto>();

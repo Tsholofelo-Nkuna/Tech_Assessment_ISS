@@ -11,8 +11,8 @@
 
     <div class="card">
 
-        <div class="card-body @(ViewModel.WasValidated ? "was-validated": string.Empty)" id="@ViewModel.FormName" method="post">
-       
+        <form class="card-body @(ViewModel.WasValidated ? "was-validated": string.Empty)" id="@ViewModel.FormName" method="post">
+        
             @{
 
                 if (ViewModel.IncludeFormStatePropsAsHidden)
@@ -70,15 +70,15 @@
                     </div>
                 }
             </div>
-            @if (!ViewModel.CollapseFooter)
-            {
-                <div class="card-footer">
-                    <button @onclick = "OnFormSubmit" class="btn btn-primary">@ViewModel.SubmitButtonText</button>
-                    <button   type="reset" class="btn btn-secondary">Reset</button>
-                </div>
-            }
-        </div>
-       
+          
+        </form>
+        @if (!ViewModel.CollapseFooter)
+        {
+            <div class="card-footer">
+                <button @onclick="OnFormSubmit" class="btn btn-primary">@ViewModel.SubmitButtonText</button>
+               @*  <button type="reset" class="btn btn-secondary">Reset</button> *@
+            </div>
+        }
     </div>
     <script>
 
