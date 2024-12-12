@@ -43,8 +43,9 @@
                             <a @onclick="() => OnDelete(rec.Id)" class="btn btn-danger me-2">Delete</a>
                             @if (!rec.Archived)
                             {
-                                <a href="@($"/{ViewModel.ArchiveController}/{ViewModel.ArchiveAction}/{rec.Id}")" class="btn btn-secondary me-2">Archive</a>
+                                <a @onclick="() => OnArchive(rec.Id)" class="btn btn-secondary me-2">Archive</a>
                             }
+                           
                             <a @onclick="() => OnView(rec.Id)" class="btn btn-outline-primary me-2">View</a>
                         </div>
                     </td>

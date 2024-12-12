@@ -79,6 +79,13 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
 
         }
 
+        public async Task OnArchiveTableRecord(bool archived)
+        {
+            if (archived) { 
+               this.GetData(SearchFormFilters);
+            }
+        }
+
         public async Task onDeleteTableRecord(bool deleted)
         {
             if (deleted)
