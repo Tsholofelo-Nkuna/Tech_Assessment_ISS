@@ -31,7 +31,6 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
                 var added =  await AddNewClient(clientToAdd);
                 if (added)
                 {
-                  
                     this.StateManager.Set<ClientDto?>(nameof(IndexState.NewClientToBeAdded), null);
                 }
                 else

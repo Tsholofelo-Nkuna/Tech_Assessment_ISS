@@ -39,9 +39,16 @@
 <div class="container-fluid app-tabs">
  
     <div class="app-tab-item" id="client-details">
-        <FormComponent ViewModel="ViewModel.DetailsFormViewModel"></FormComponent>
+        <FormComponent
+            ViewModel="ViewModel.DetailsFormViewModel"
+            OnFormSubmitClick="OnSaveClientDetails"
+        >
+
+        </FormComponent>
         <div class="fs-5 my-3">Primary Contact Person</div>
-        <FormComponent ViewModel="ViewModel.PrimaryContactPersonFormViewModel"></FormComponent>
+        <FormComponent 
+            ViewModel="ViewModel.PrimaryContactPersonFormViewModel"
+            OnFormSubmitClick="OnSaveClientContacts"></FormComponent>
     </div>
 </div>
 

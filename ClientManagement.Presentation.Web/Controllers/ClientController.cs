@@ -34,6 +34,13 @@ namespace ClientManagement.Presentation.Web.Controllers
             return  (await _clientService.Get(x => !x.Archived && x.Id == id)).FirstOrDefault();
         }
 
+        // GET api/<ClientController>/5
+        [HttpGet("GetByArchive/{id}")]
+        public ClientDto? Get(Guid id,[FromQuery] bool archived)
+        {
+            return _clientService.Get( new ClientDto { Id = id, Archived= archived}).FirstOrDefault();
+        }
+
         // POST api/<ClientController>
         [HttpPost]
         public async Task<bool> Post(ClientDto value)
