@@ -29,9 +29,6 @@
        e.addEventListener("click",eventPayload => {
            eventPayload.currentTarget.classList.add("active");
            currentCollection.filter(x => x!==e).forEach(otherE => otherE.classList.remove("active"));
-           console.log(e);
-           console.log(currentCollection.filter(x => x!==e));
-
        })
     })
 </script>
