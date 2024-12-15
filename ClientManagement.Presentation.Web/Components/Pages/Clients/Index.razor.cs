@@ -1,11 +1,14 @@
-﻿using Core.Presentation.Models;
+﻿using ClientManagement.Presentation.Web.Components.Pages.Clients.State;
+using Core.Presentation.Models;
 using Core.Presentation.Models.DataTransferObjects;
+using Core.Presentation.ViewComponents.Components;
 using Core.Presentation.ViewComponents.Components.Base;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.JSInterop;
+using Question3.BusinessLogicLayer;
 using Question3.BusinessLogicLayer.Interfaces;
 
 namespace ClientManagement.Presentation.Web.Components.Pages.Clients
@@ -15,22 +18,42 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
        
         [SupplyParameterFromForm(FormName = "NewClientDetails")]
         public ClientDto? NewClientDetails { get; set; }
+        public TableComponent<ClientDto> ClientsTable { get; set; }
+        [Inject]
+        public IndexStateManager StateManager { get; set; }
         protected override async Task OnInitializedAsync()
         {
+          
             await base.OnInitializedAsync();
-            this.BaseUrl = "api/client";
+            this.BaseUrl = "api/client"; 
+            if(this.StateManager.Get<ClientDto?>(nameof(IndexState.NewClientToBeAdded)) is ClientDto clientToAdd)
+            {
+                var added =  await AddNewClient(clientToAdd);
+                if (added)
+                {
+                  
+                    this.StateManager.Set<ClientDto?>(nameof(IndexState.NewClientToBeAdded), null);
+                }
+                else
+                {
+                    //Display error message
+                }
+            }
             this.GetData(this.SearchFormFilters);
-           
+
         }
 
+        public  async Task<bool> AddNewClient(ClientDto newClient)
+        {
+            var response = await this.AppApi.PostAsJsonAsync<ClientDto>(this.BaseUrl, newClient);
+            return response.IsSuccessStatusCode && (await response.Content.ReadFromJsonAsync<bool>());
+        }
         private async void GetData(ClientDto filters)
         {
             try
             {
 
-            
                 var url = $"{this.BaseUrl}/Get";
-
                 var response = await this.AppApi.PostAsJsonAsync(url, filters);
                 if (response.IsSuccessStatusCode)
                 {
@@ -58,41 +81,39 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
                 newC.PrimaryContactName = contactInfo.PrimaryContactName;
                 newC.PrimaryContactPhone = contactInfo.PrimaryContactPhone;
                 newC.PrimaryContactEmail = contactInfo.PrimaryContactEmail;
-                this.ViewModel.ModalViewModel.Show = false;
-              
-                var response = await this.AppApi.PostAsJsonAsync(this.BaseUrl, newC);
-                if (response.IsSuccessStatusCode &&  await response.Content.ReadFromJsonAsync<bool>())
-                {
-                    await JS.InvokeVoidAsync("window.location.reload");  
-                }
-
+                this.StateManager.Set(nameof(IndexState.NewClientToBeAdded), newC);
             }
            
         }
 
-        public async Task OnSubmitSearchFilters(IEnumerable<ClientDto> searchFilters)
+        public  Task OnSubmitSearchFilters(IEnumerable<ClientDto> searchFilters)
         {
             this.GetData(this.SearchFormFilters);
+            return Task.CompletedTask;
         }
 
-        public async Task OnViewTableRecord(Guid recordId)
+        public  Task OnViewTableRecord(Guid recordId)
         {
             this.NavManager.NavigateTo($"{this.ViewModel.TableConfig.ViewController}/{this.ViewModel.TableConfig.ViewAction}/{recordId}?{nameof(ClientDto.Archived)}={this.SearchFormFilters.Archived}");
+            return Task.CompletedTask;
         }
 
-        public async Task OnArchiveTableRecord(bool archived)
+        public Task OnArchiveTableRecord(bool archived)
         {
             if (archived) { 
                this.GetData(SearchFormFilters);
             }
+
+            return Task.CompletedTask;
         }
 
-        public async Task OnDeleteTableRecord(bool deleted)
+        public Task OnDeleteTableRecord(bool deleted)
         {
             if (deleted)
             {
                 this.GetData(this.SearchFormFilters);
             }
+            return Task.CompletedTask;
         }
         public ClientDto SearchFormFilters {
             get {

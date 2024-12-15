@@ -84,12 +84,15 @@ namespace Question3.BusinessLogicLayer.Services
                 x.PrimaryContactPhone = primaryContact?.Phone ?? string.Empty;
                 x.PrimaryContactName = primaryContact?.Name ?? string.Empty;
             });
-            return returned;
+            return returned.OrderByDescending(x => x.CreatedOn);
         }
 
         public override Task<IEnumerable<ClientDto>> Get(Expression<Func<ClientEntity, bool>> filter)
         {
-           var clients =  this._entitySet.Where(filter).AsNoTracking().Include(x => x.ContactPerson).ToList();
+           var clients =  this._entitySet
+                .Where(filter).AsNoTracking().Include(x => x.ContactPerson)
+                .OrderByDescending(x => x.CreatedOn)
+                .ToList();
            return Task.FromResult<IEnumerable<ClientDto>>(this._mapper.Map<IEnumerable<ClientDto>>(clients));
         }
 
