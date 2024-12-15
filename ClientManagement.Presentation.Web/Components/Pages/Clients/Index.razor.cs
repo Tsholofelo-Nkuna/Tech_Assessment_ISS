@@ -1,4 +1,4 @@
-﻿using ClientManagement.Presentation.Web.Components.Pages.Clients.State;
+﻿using ClientManagement.Presentation.Web.Components.Pages.Clients.State.Index;
 using Core.Presentation.Models;
 using Core.Presentation.Models.DataTransferObjects;
 using Core.Presentation.ViewComponents.Components;

@@ -1,6 +1,6 @@
 ﻿using Core.Presentation.Models.DataTransferObjects;
 
-namespace ClientManagement.Presentation.Web.Components.Pages.Clients.State
+namespace ClientManagement.Presentation.Web.Components.Pages.Clients.State.Index
 {
     public class IndexState
     {

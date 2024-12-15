@@ -1,4 +1,4 @@
-﻿using ClientManagement.Presentation.Web.Components.Pages.Clients.State;
+﻿using ClientManagement.Presentation.Web.Components.Pages.Clients.State.Index;
 
 namespace ClientManagement.Presentation.Web
 {
