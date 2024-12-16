@@ -57,7 +57,7 @@ namespace Question3.BusinessLogicLayer.Services
             return await this.Update(toBeArchived);
         }
 
-        public IEnumerable<ClientDto> Get(ClientDto filter)
+        public override Task<IEnumerable<ClientDto>> Get(ClientDto filter)
         {
             var query = this._entitySet.AsNoTracking();
             if (filter.Archived)
@@ -84,7 +84,7 @@ namespace Question3.BusinessLogicLayer.Services
                 x.PrimaryContactPhone = primaryContact?.Phone ?? string.Empty;
                 x.PrimaryContactName = primaryContact?.Name ?? string.Empty;
             });
-            return returned.OrderByDescending(x => x.CreatedOn);
+            return Task.FromResult<IEnumerable<ClientDto>>(returned.OrderByDescending(x => x.CreatedOn));
         }
 
         public override Task<IEnumerable<ClientDto>> Get(Expression<Func<ClientEntity, bool>> filter)

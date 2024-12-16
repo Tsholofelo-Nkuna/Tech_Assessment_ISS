@@ -8,23 +8,13 @@
         <div>
             <FormComponent ViewModel="ViewModel.SearchFormComponentViewModel" OnFormSubmitClick="OnSubmitSearchFilters"></FormComponent>
         </div>
-        <div class="card bg-light my-2">
-            <div class="card-header">
-                <div class="d-flex">
-                    <button class="btn btn-outline-primary" data-toggle="modal" data-target="#new-client-modal" @onclick="@(()=>{ViewModel.ModalViewModel.Show = true; ViewModel.ModalViewModel.Title = "Create New Client";})">
-                        New
-                    </button>
-                </div>
-            </div>
-            <div class="card-body">
-                <TableComponent ViewModel="ViewModel.TableConfig"
-                                OnViewClick="OnViewTableRecord"
-                                OnDeleteClick="OnDeleteTableRecord"
-                                OnArchiveClick="OnArchiveTableRecord"
-                                @ref="ClientsTable">
-                </TableComponent>
-            </div>
-        </div>
+        <TableComponent ViewModel="ViewModel.TableConfig"
+                        OnViewClick="OnViewTableRecord"
+                        OnDeleteClick="OnDeleteTableRecord"
+                        OnArchiveClick="OnArchiveTableRecord"
+                        OnNewClick="OnCreateNewTableRecord"
+                        @ref="ClientsTable">
+        </TableComponent>
 
         <ModalComponent ViewModel="ViewModel.ModalViewModel">
             <Body>
@@ -45,11 +35,3 @@
         </ModalComponent>
     </Body>
 </PageComponent>
-
-
-
-    <script>
-        function reloadPage(){
-            alert();
-        }
-    </script>

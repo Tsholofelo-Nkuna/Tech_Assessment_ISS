@@ -56,6 +56,7 @@ namespace Core.Presentation.Models
             ArchiveController = "Clients",
             ViewAction = "Details",//nameof(HomeController.Details),
             ViewController = "Clients",
+            ShowCreateNewButton = true
         };
 
         public FormComponentViewModel<ClientDto> NewClientFormViewModel { get; set; } = new(Enumerable.Empty<ClientDto>().Append(new ClientDto()), "NewClientForm")

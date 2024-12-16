@@ -7,9 +7,9 @@ namespace Question3.BusinessLogicLayer.Interfaces
 {
     public interface IClientService : IGenericService<ClientDto, ClientEntity>
     {
-        public IEnumerable<ClientDto> Get(ClientDto filter);
+       
 
-        public Task<bool> AddOrUpdate(ClientDto client);
-        public Task<bool> Archive(IEnumerable<Guid> identifiers);
+         Task<bool> AddOrUpdate(ClientDto client);
+         Task<bool> Archive(IEnumerable<Guid> identifiers);
     }
 }

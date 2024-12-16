@@ -1,0 +1,17 @@
+﻿@page "/Products"
+@using Core.Presentation.Models.Models
+@using Core.Presentation.Models.Models.DataTransferObjects
+
+@inherits GenericComponentBase<ProductsViewModel, ProductDto>
+<PageTitle>Products</PageTitle>
+<PageComponent>
+    <Body>
+      <FormComponent ViewModel="ViewModel.ProductSearchViewModel" >
+
+      </FormComponent>
+
+      <TableComponent ViewModel="ViewModel.ProductTableViewModel">
+
+      </TableComponent>
+    </Body>
+</PageComponent>

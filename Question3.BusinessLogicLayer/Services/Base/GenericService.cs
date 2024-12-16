@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Question3.BusinessLogicLayer.Services.Base
 {
-    public class GenericService<TDto, TEntity> : IGenericService<TDto, TEntity> where TEntity : BaseEntity where TDto : BaseDto
+    public abstract class GenericService<TDto, TEntity> : IGenericService<TDto, TEntity> where TEntity : BaseEntity where TDto : BaseDto
     {
         protected readonly WebDbContext _dbContext;
         protected readonly DbSet<TEntity> _entitySet;
@@ -25,6 +25,16 @@ namespace Question3.BusinessLogicLayer.Services.Base
             _mapper = mapper;
        
         }
+
+        public async Task<bool> AddOrUpdate(List<TDto> payload)
+        {
+           var added = payload.Where(x => x.Id == Guid.Empty);
+           var updated = payload.Where(x => x.Id != Guid.Empty);
+           var hasUpdated = updated.Any() ? await this.Update(updated.ToList()) : true;
+           var hasAdded = added.Any() ? await this.Update(added.ToList()) : true;
+           return hasUpdated && hasAdded;
+        }
+
         public virtual async Task<bool> Delete(IEnumerable<Guid> identifiers)
         {
             var removed = _entitySet.Where(x => identifiers.Contains(x.Id)).ToList();
@@ -37,6 +47,9 @@ namespace Question3.BusinessLogicLayer.Services.Base
             var list = await _entitySet.Where(filter).AsNoTracking().OrderByDescending(x=> x.CreatedOn).ToListAsync();
             return _mapper.Map<List<TDto>>(list);
         }
+
+        abstract public Task<IEnumerable<TDto>> Get(TDto filter);
+       
 
         public virtual async Task<bool> Insert(List<TDto> inserted)
         {

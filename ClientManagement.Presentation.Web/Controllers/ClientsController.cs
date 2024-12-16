@@ -22,9 +22,9 @@ namespace ClientManagement.Presentation.Web.Controllers
 
         // GET: api/<ClientController>/Get
         [HttpPost("[action]")]
-        public IEnumerable<ClientDto> Get(ClientDto filter)
+        public async Task<IEnumerable<ClientDto>> Get(ClientDto filter)
         {
-            return this._clientService.Get(filter);
+            return await this._clientService.Get(filter);
         }
 
         // GET api/<ClientController>/5
@@ -36,9 +36,9 @@ namespace ClientManagement.Presentation.Web.Controllers
 
         // GET api/<ClientController>/5
         [HttpGet("GetByArchive/{id}")]
-        public ClientDto? Get(Guid id,[FromQuery] bool archived)
+        public async Task<ClientDto?> Get(Guid id,[FromQuery] bool archived)
         {
-            return _clientService.Get( new ClientDto { Id = id, Archived= archived}).FirstOrDefault();
+            return  (await _clientService.Get( new ClientDto { Id = id, Archived= archived})).FirstOrDefault();
         }
 
         // POST api/<ClientController>

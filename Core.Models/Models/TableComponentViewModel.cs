@@ -12,6 +12,7 @@ namespace Core.Presentation.Models
        public TableComponentViewModel(): this(Enumerable.Empty<TRecordType>()){}
        public TableComponentViewModel(IEnumerable<TRecordType> modelState): base(modelState) { }
        public List<TableComponentColumnConfig> ColumnConfigs = new List<TableComponentColumnConfig>();
+       public bool ShowCreateNewButton { get; set; }
        public string DeleteAction = string.Empty;
        public string DeleteController = string.Empty;
        public string ArchiveAction = string.Empty;

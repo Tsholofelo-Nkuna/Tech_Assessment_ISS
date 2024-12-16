@@ -9,48 +9,60 @@
 @{
   
 }
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            @foreach (var colConfig in ViewModel.ColumnConfigs)
-            {
-                <th>@(CultureInfo.InvariantCulture.TextInfo.ToTitleCase(colConfig.Name))</th>
-            }
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (!ViewModel.ViewModelState.Any())
-        {
-            <tr>
-                <td colspan="@ViewModel.ColumnConfigs.Count() + 1" class="text-center">
-                    No Data
-                </td>
-            </tr>
-        }
-        else
-        {
-            @foreach (var rec in ViewModel.ViewModelState)
-            {
+<div class="card bg-light my-2">
+    @if(ViewModel.ShowCreateNewButton){
+        <div class="card-header">
+            <div class="d-flex">
+                <button class="btn btn-outline-primary" @onclick="() => OnCreateNew()">
+                    New
+                </button>
+            </div>
+        </div>
+    }
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    @foreach (var config in ViewModel.ColumnConfigs)
+                    @foreach (var colConfig in ViewModel.ColumnConfigs)
                     {
-                        <td>@ViewModel.Get(rec.Id, config.Index, typeof(string))</td>
+                        <th>@(CultureInfo.InvariantCulture.TextInfo.ToTitleCase(colConfig.Name))</th>
                     }
-                    <td>
-                        <div class="d-flex">
-                            <a @onclick="() => OnDelete(rec.Id)" class="btn btn-danger me-2">Delete</a>
-                            @if (!rec.Archived)
-                            {
-                                <a @onclick="() => OnArchive(rec.Id)" class="btn btn-secondary me-2">Archive</a>
-                            }
-                           
-                            <a @onclick="() => OnView(rec.Id)" class="btn btn-outline-primary me-2">View</a>
-                        </div>
-                    </td>
+                    <th></th>
                 </tr>
-            }
-        }
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                @if (!ViewModel.ViewModelState.Any())
+                {
+                    <tr>
+                        <td colspan="@ViewModel.ColumnConfigs.Count() + 1" class="text-center">
+                            No Data
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var rec in ViewModel.ViewModelState)
+                    {
+                        <tr>
+                            @foreach (var config in ViewModel.ColumnConfigs)
+                            {
+                                <td>@ViewModel.Get(rec.Id, config.Index, typeof(string))</td>
+                            }
+                            <td>
+                                <div class="d-flex">
+                                    <a @onclick="() => OnDelete(rec.Id)" class="btn btn-danger me-2">Delete</a>
+                                    @if (!rec.Archived)
+                                    {
+                                        <a @onclick="() => OnArchive(rec.Id)" class="btn btn-secondary me-2">Archive</a>
+                                    }
+
+                                    <a @onclick="() => OnView(rec.Id)" class="btn btn-outline-primary me-2">View</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

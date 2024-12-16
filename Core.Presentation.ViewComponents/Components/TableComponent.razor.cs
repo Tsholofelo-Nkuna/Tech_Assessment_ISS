@@ -18,6 +18,8 @@ namespace Core.Presentation.ViewComponents.Components
         public Func<bool, Task>? OnDeleteClick { get; set; }
         [Parameter]
         public Func<bool , Task>? OnArchiveClick { get; set; }
+        [Parameter]
+        public Func<Task>? OnNewClick { get; set; }
         public void OnView(Guid recordId) {
             OnViewClick?.Invoke(recordId);
         }
@@ -38,6 +40,12 @@ namespace Core.Presentation.ViewComponents.Components
               OnArchiveClick?.Invoke(await response.Content.ReadFromJsonAsync<bool>());
             }
 
+        }
+
+        public Task OnCreateNew()
+        {
+            this.OnNewClick?.Invoke();
+            return Task.CompletedTask;
         }
 
         public TableComponent() { }

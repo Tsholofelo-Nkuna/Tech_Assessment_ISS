@@ -84,10 +84,17 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
             }
            
         }
-
+   
         public  Task OnSubmitSearchFilters(IEnumerable<ClientDto> searchFilters)
         {
             this.GetData(this.SearchFormFilters);
+            return Task.CompletedTask;
+        }
+
+        public Task OnCreateNewTableRecord()
+        {
+            this.ViewModel.ModalViewModel.Show = true;
+            StateHasChanged();
             return Task.CompletedTask;
         }
 
