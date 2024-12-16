@@ -16,7 +16,11 @@ namespace Core.Presentation.Models
        public string DeleteAction = string.Empty;
        public string DeleteController = string.Empty;
        public string ArchiveAction = string.Empty;
-       public string ArchiveController = string.Empty;  
+       public string ArchiveController = string.Empty;
+       public bool ShowDeleteButton { get; set; } = true;
+       public bool ShowArchiveButton { get; set; } = true;
+       public bool ShowViewButton { get; set; } = true;
+
        public string ViewAction {  get; set; } = string.Empty;
        public string ViewController { get; set; } = string.Empty;
        private BaseDto _filter = new BaseDto();

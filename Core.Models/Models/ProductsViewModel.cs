@@ -1,4 +1,5 @@
 ﻿using Core.Presentation.Models.Base;
+using Core.Presentation.Models.DataTransferObjects.Base;
 using Core.Presentation.Models.Models.DataTransferObjects;
 using System;
 using System.Collections.Generic;
@@ -61,6 +62,36 @@ namespace Core.Presentation.Models.Models
                     }
                 },
                 ShowCreateNewButton = true
+            };
+
+        public FormComponentViewModel<ProductDto> NewProductFormViewModel { get; set; } =
+            new FormComponentViewModel<ProductDto>(Enumerable.Empty<ProductDto>().Append(new ProductDto()), "New-Product-Form")
+            {
+                Fields = new List<InputFieldViewModel<ProductDto>>
+                {
+                    new InputFieldViewModel<ProductDto>(nameof(ProductDto.Name), "Name")
+                    {
+                        ControlType = ControlType.Input,
+                        Type = "text",
+                    },
+                     new InputFieldViewModel<ProductDto>(nameof(ProductDto.Description), "Description")
+                    {
+                        ControlType = ControlType.Input,
+                        Type = "text"
+                    },
+                      new InputFieldViewModel<ProductDto>(nameof(ProductDto.Price), "Price")
+                    {
+                        ControlType = ControlType.Input,
+                        Type = "number"
+                    }
+                },
+                ColClass = "col-12",
+                
+            };
+        public ModalViewModel<BaseDto> NewProductModalViewModel { get; set; } =
+            new ModalViewModel<BaseDto>()
+            {
+                Title = "New Product"
             };
         
     }

@@ -50,13 +50,17 @@
                             }
                             <td>
                                 <div class="d-flex">
-                                    <a @onclick="() => OnDelete(rec.Id)" class="btn btn-danger me-2">Delete</a>
-                                    @if (!rec.Archived)
+                                    @if(ViewModel.ShowDeleteButton){
+                                        <a @onclick="() => OnDelete(rec.Id)" class="btn btn-danger me-2">Delete</a>
+                                    }
+                                    @if (!rec.Archived && ViewModel.ShowArchiveButton)
                                     {
                                         <a @onclick="() => OnArchive(rec.Id)" class="btn btn-secondary me-2">Archive</a>
                                     }
 
-                                    <a @onclick="() => OnView(rec.Id)" class="btn btn-outline-primary me-2">View</a>
+                                    @if(ViewModel.ShowViewButton){
+                                        <a @onclick="() => OnView(rec.Id)" class="btn btn-outline-primary me-2">View</a>
+                                    }
                                 </div>
                             </td>
                         </tr>

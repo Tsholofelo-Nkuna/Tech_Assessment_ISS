@@ -10,8 +10,18 @@
 
       </FormComponent>
 
-      <TableComponent ViewModel="ViewModel.ProductTableViewModel">
+      <TableComponent 
+          ViewModel="ViewModel.ProductTableViewModel"
+          OnNewClick="OnCreateNewProduct"
+      >
 
       </TableComponent>
     </Body>
 </PageComponent>
+<ModalComponent ViewModel="ViewModel.NewProductModalViewModel">
+    <Body>
+        <FormComponent ViewModel="ViewModel.NewProductFormViewModel">
+
+        </FormComponent>
+    </Body>
+</ModalComponent>
