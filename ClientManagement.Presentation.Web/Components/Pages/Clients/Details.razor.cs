@@ -1,4 +1,5 @@
-﻿using ClientManagement.Presentation.Web.Components.Pages.Clients.State.Details;
+﻿using ClientManagement.Presentation.Web.Components.Layout;
+using ClientManagement.Presentation.Web.Components.Pages.Clients.State.Details;
 using Core.Presentation.Models;
 using Core.Presentation.Models.DataTransferObjects;
 using Core.Presentation.ViewComponents.Components.Base;
@@ -26,7 +27,7 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            this.BaseUrl = "api/client";
+            this.BaseUrl = "api/clients";
             await this.GetData(new ClientDto { Id = Id, Archived = this.Archived });
            
         }

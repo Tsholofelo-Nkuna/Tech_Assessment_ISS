@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
+using System.Text.RegularExpressions;
 
 namespace Core.Presentation.ViewComponents.Components.Base
 {
@@ -28,6 +29,13 @@ namespace Core.Presentation.ViewComponents.Components.Base
         [Inject] private IHttpClientFactory _httpClientFactory {  get; set; }
       
         public HttpClient AppApi => _httpClientFactory.CreateClient("AppApi");
+        public IEnumerable<string> BreadcrumbItems {
+            get
+            {
+              var path = Regex.Match(this.NavManager.Uri, $@"(?<={this.NavManager.BaseUri}).+");
+              return (path?.Success ?? false) ? path.Value.Split("/", StringSplitOptions.RemoveEmptyEntries) : Enumerable.Empty<string>();
+            }
+        }
         public virtual string BaseUrl { get; set; } = string.Empty;
         [Inject] public IJSRuntime JS { get; set; }
         public GenericComponentBase() : this(new TViewModel()) { }

@@ -1,0 +1,12 @@
+﻿@using Core.Presentation.Models.DataTransferObjects.Base
+@using Core.Presentation.Models.Models
+@using Core.Presentation.ViewComponents.Components.Base
+@inherits GenericComponentBase<PageComponentViewModel, BaseDto>
+<div class="breadcrumb">
+    @foreach(var item in this.BreadcrumbItems){
+        <div class="breadcrumb-item">@item</div>
+    }
+</div>
+@if(Body is RenderFragment){
+    @(Body);
+}

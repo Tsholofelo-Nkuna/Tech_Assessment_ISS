@@ -51,11 +51,11 @@ namespace Core.Presentation.Models
                 new TableComponentColumnConfig() { Index = nameof(ClientDto.Address), Name = "Address"}
             },
             DeleteAction = "Delete",//nameof(HomeController.Delete),
-            DeleteController = "Client",
+            DeleteController = "Clients",
             ArchiveAction = "Archive", //nameof(HomeController.Archive),
-            ArchiveController = "Client",
+            ArchiveController = "Clients",
             ViewAction = "Details",//nameof(HomeController.Details),
-            ViewController = "Client",
+            ViewController = "Clients",
         };
 
         public FormComponentViewModel<ClientDto> NewClientFormViewModel { get; set; } = new(Enumerable.Empty<ClientDto>().Append(new ClientDto()), "NewClientForm")

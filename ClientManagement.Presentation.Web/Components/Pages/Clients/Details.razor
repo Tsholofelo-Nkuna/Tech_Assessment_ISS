@@ -1,4 +1,5 @@
-﻿@page "/Client/Details/{id:guid}"
+﻿@page "/Clients/Details/{id:guid}"
+@using ClientManagement.Presentation.Web.Components.Layout
 @using Core.Presentation.Models
 @using Core.Presentation.Models.DataTransferObjects
 @using Core.Presentation.ViewComponents.Components.Base
@@ -10,46 +11,46 @@
     var primaryContact = firstIndividual?.ContactPerson?.Where(x => x.IsPrimaryContact).FirstOrDefault();
    
 }
+<PageTitle>Client - Details</PageTitle>
+<PageComponent>
+    <Body>
+        <div class="mb-2">
+            <a class="btn btn-link" @onclick="@(() => NavManager.NavigateTo("/"))">Back</a>
+        </div>
+        <div class="bg-light py-3 shadow-none row">
+            <div class="col">
+                <h5>@firstIndividual?.CompanyName | @firstIndividual?.LandlineNumber</h5>
+                <div><label class="fw-bold me-2 text-black-50">Trading As:</label>@firstIndividual?.TradingAs</div>
+                <div><label class="fw-bold me-2 text-black-50">Client Id:</label> @firstIndividual?.Id</div>
+            </div>
+            <div class="col">
+                <h5>Address</h5>
+                <div>@firstIndividual?.Province</div>
+                <div>@firstIndividual?.Address</div>
+            </div>
+            <div class="col">
+                <h5>Primary Contact Person</h5>
+                <div><label class="fw-bold me-2 text-black-50">Name:</label> @primaryContact?.Name</div>
+                <div><label class="fw-bold me-2 text-black-50">Email:</label> @primaryContact?.Email</div>
+                <div><label class="fw-bold me-2 text-black-50">Phone:</label> @primaryContact?.Phone</div>
+            </div>
+        </div>
+        <nav class="nav nav-tabs my-2">
+            <a class="nav-link active" href="#client-details">Details</a>
+        </nav>
+        <div class="container-fluid app-tabs">
 
+            <div class="app-tab-item" id="client-details">
+                <FormComponent ViewModel="ViewModel.DetailsFormViewModel"
+                               OnFormSubmitClick="OnSaveClientDetails">
 
-<div class="mb-2">
-    <a class="btn btn-link" @onclick = "@(() => NavManager.NavigateTo("/"))">Back</a>
-</div>
-<div class="bg-light py-3 shadow-none row">
-    <div class="col">
-        <h5>@firstIndividual?.CompanyName | @firstIndividual?.LandlineNumber</h5>
-        <div><label class="fw-bold me-2 text-black-50">Trading As:</label>@firstIndividual?.TradingAs</div>
-        <div><label class="fw-bold me-2 text-black-50">Client Id:</label> @firstIndividual?.Id</div>
-    </div>
-    <div class="col">
-        <h5>Address</h5>
-        <div>@firstIndividual?.Province</div>
-        <div>@firstIndividual?.Address</div>
-    </div>
-    <div class="col">
-        <h5>Primary Contact Person</h5>
-        <div><label class="fw-bold me-2 text-black-50">Name:</label> @primaryContact?.Name</div>
-        <div><label class="fw-bold me-2 text-black-50">Email:</label> @primaryContact?.Email</div>
-        <div><label class="fw-bold me-2 text-black-50">Phone:</label> @primaryContact?.Phone</div>
-    </div>
-</div>
-<nav class="nav nav-tabs my-2">
-    <a class="nav-link active" href="#client-details">Details</a>
-</nav>
-<div class="container-fluid app-tabs">
- 
-    <div class="app-tab-item" id="client-details">
-        <FormComponent
-            ViewModel="ViewModel.DetailsFormViewModel"
-            OnFormSubmitClick="OnSaveClientDetails"
-        >
-
-        </FormComponent>
-        <div class="fs-5 my-3">Primary Contact Person</div>
-        <FormComponent 
-            ViewModel="ViewModel.PrimaryContactPersonFormViewModel"
-            OnFormSubmitClick="OnSaveClientContacts"></FormComponent>
-    </div>
-</div>
+                </FormComponent>
+                <div class="fs-5 my-3">Primary Contact Person</div>
+                <FormComponent ViewModel="ViewModel.PrimaryContactPersonFormViewModel"
+                               OnFormSubmitClick="OnSaveClientContacts"></FormComponent>
+            </div>
+        </div>
+    </Body>
+</PageComponent>
 
 

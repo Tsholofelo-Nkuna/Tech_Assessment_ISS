@@ -9,11 +9,11 @@ namespace ClientManagement.Presentation.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientController : ControllerBase
+    public class ClientsController : ControllerBase
     {
         private readonly IClientService _clientService;
 
-        public ClientController(IClientService clientService)
+        public ClientsController(IClientService clientService)
         {
             _clientService = clientService;
         }

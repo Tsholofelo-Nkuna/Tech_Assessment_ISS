@@ -25,7 +25,7 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
         {
           
             await base.OnInitializedAsync();
-            this.BaseUrl = "api/client"; 
+            this.BaseUrl = "api/clients"; 
             if(this.StateManager.Get<ClientDto?>(nameof(IndexState.NewClientToBeAdded)) is ClientDto clientToAdd)
             {
                 var added =  await AddNewClient(clientToAdd);

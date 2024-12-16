@@ -1,47 +1,52 @@
-﻿@page "/Client"
+﻿@page "/Clients"
+@using ClientManagement.Presentation.Web.Components.Layout
 @inherits GenericComponentBase<ClientsViewModel, ClientDto>
 
 <PageTitle>Client - Management</PageTitle>
-
-
-<div>
-    <FormComponent  ViewModel="ViewModel.SearchFormComponentViewModel" OnFormSubmitClick="OnSubmitSearchFilters"></FormComponent>
-</div>
-<div class="card bg-light my-2">
-    <div class="card-header">
-        <div class="d-flex">
-            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#new-client-modal" @onclick="@(()=>{ViewModel.ModalViewModel.Show = true; ViewModel.ModalViewModel.Title = "Create New Client";})">
-                New
-            </button>
+<PageComponent>
+    <Body>
+        <div>
+            <FormComponent ViewModel="ViewModel.SearchFormComponentViewModel" OnFormSubmitClick="OnSubmitSearchFilters"></FormComponent>
         </div>
-    </div>
-    <div class="card-body">
-     <TableComponent 
-         ViewModel="ViewModel.TableConfig"
-         OnViewClick="OnViewTableRecord"
-         OnDeleteClick="OnDeleteTableRecord"
-         OnArchiveClick="OnArchiveTableRecord"
-         @ref="ClientsTable"
-     >
-     </TableComponent>
-    </div>
-</div>
- 
-    <ModalComponent ViewModel="ViewModel.ModalViewModel">
-        <Body>
-            <div id="client-details">
-                <FormComponent ViewModel="ViewModel.NewClientFormViewModel"></FormComponent>
+        <div class="card bg-light my-2">
+            <div class="card-header">
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary" data-toggle="modal" data-target="#new-client-modal" @onclick="@(()=>{ViewModel.ModalViewModel.Show = true; ViewModel.ModalViewModel.Title = "Create New Client";})">
+                        New
+                    </button>
+                </div>
             </div>
-            <h5 class="my-3">Primary Contact Details</h5>
-            <div id="primary-contact-person">
-                <FormComponent ViewModel="ViewModel.PrimaryContactFormViewModel"></FormComponent>
+            <div class="card-body">
+                <TableComponent ViewModel="ViewModel.TableConfig"
+                                OnViewClick="OnViewTableRecord"
+                                OnDeleteClick="OnDeleteTableRecord"
+                                OnArchiveClick="OnArchiveTableRecord"
+                                @ref="ClientsTable">
+                </TableComponent>
             </div>
-        </Body>
-        <Footer>
-            <button @onclick=" async (eventArgs) => { await this.OnNewClientFormSubmitted(ViewModel.NewClientFormViewModel.ViewModelState.FirstOrDefault(), ViewModel.PrimaryContactFormViewModel.ViewModelState.FirstOrDefault());}"
-                class="btn btn-primary">Submit</button>
-        </Footer>
-    </ModalComponent>
+        </div>
+
+        <ModalComponent ViewModel="ViewModel.ModalViewModel">
+            <Body>
+                <div id="client-details">
+                    <FormComponent ViewModel="ViewModel.NewClientFormViewModel"></FormComponent>
+                </div>
+                <h5 class="my-3">Primary Contact Details</h5>
+                <div id="primary-contact-person">
+                    <FormComponent ViewModel="ViewModel.PrimaryContactFormViewModel"></FormComponent>
+                </div>
+            </Body>
+            <Footer>
+                <button @onclick=" async (eventArgs) => { await this.OnNewClientFormSubmitted(ViewModel.NewClientFormViewModel.ViewModelState.FirstOrDefault(), ViewModel.PrimaryContactFormViewModel.ViewModelState.FirstOrDefault());}"
+                        class="btn btn-primary">
+                    Submit
+                </button>
+            </Footer>
+        </ModalComponent>
+    </Body>
+</PageComponent>
+
+
 
     <script>
         function reloadPage(){
