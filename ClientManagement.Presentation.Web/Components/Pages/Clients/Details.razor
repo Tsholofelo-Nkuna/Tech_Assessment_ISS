@@ -35,21 +35,33 @@
                 <div><label class="fw-bold me-2 text-black-50">Phone:</label> @primaryContact?.Phone</div>
             </div>
         </div>
-        <nav class="nav nav-tabs my-2">
+        <TabsComponent ViewModel="ViewModel.ClientTabConfig">
+            <TabItem>
+                @if(context.Title.Equals("details", StringComparison.OrdinalIgnoreCase)){
+                    <FormComponent ViewModel="ViewModel.DetailsFormViewModel"
+                                   OnFormSubmitClick="OnSaveClientDetails">
+
+                    </FormComponent>
+                    <div class="fs-5 my-3">Primary Contact Person</div>
+                    <FormComponent ViewModel="ViewModel.PrimaryContactPersonFormViewModel"
+                                   OnFormSubmitClick="OnSaveClientContacts">
+                    </FormComponent>
+                }
+                else if(context.Title.Equals("invoices", StringComparison.OrdinalIgnoreCase)){
+                  
+                    <span class="fs-2 text-center d-block">Coming Soon!</span>
+                }
+            </TabItem>
+        </TabsComponent>
+      @*   <nav class="nav nav-tabs my-2">
             <a class="nav-link active" href="#client-details">Details</a>
         </nav>
         <div class="container-fluid app-tabs">
 
             <div class="app-tab-item" id="client-details">
-                <FormComponent ViewModel="ViewModel.DetailsFormViewModel"
-                               OnFormSubmitClick="OnSaveClientDetails">
-
-                </FormComponent>
-                <div class="fs-5 my-3">Primary Contact Person</div>
-                <FormComponent ViewModel="ViewModel.PrimaryContactPersonFormViewModel"
-                               OnFormSubmitClick="OnSaveClientContacts"></FormComponent>
+              
             </div>
-        </div>
+        </div> *@
     </Body>
 </PageComponent>
 

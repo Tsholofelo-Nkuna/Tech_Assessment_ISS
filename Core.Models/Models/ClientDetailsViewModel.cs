@@ -1,6 +1,7 @@
 ﻿
 using Core.Presentation.Models.DataTransferObjects;
 using Core.Presentation.Models.Base;
+using Core.Presentation.Models.Models;
 
 namespace Core.Presentation.Models
 {
@@ -19,11 +20,17 @@ namespace Core.Presentation.Models
             this.DetailsFormViewModel.Fields = _clientsViewModel.NewClientFormViewModel.Fields;
             this.PrimaryContactPersonFormViewModel.Fields = _clientsViewModel.PrimaryContactFormViewModel.Fields;
             this.DetailsFormViewModel.ColClass = "col-12";
-           
         }
 
         public FormComponentViewModel<ClientDto> DetailsFormViewModel { get; set; }
         public FormComponentViewModel<ClientDto> PrimaryContactPersonFormViewModel { get; set; }
+        public TabsComponentViewModel<ClientDto> ClientTabConfig {  get; set; } = new TabsComponentViewModel<ClientDto>()
+        {
+            TabItems = new[] { 
+                new TabItemViewModel("Details", "client-details-tab") { Active = true},
+                new TabItemViewModel("Invoices", "client-invoices")
+            }
+        };
         public bool ShowNewClientModal {  get; set; }
     }
 }
