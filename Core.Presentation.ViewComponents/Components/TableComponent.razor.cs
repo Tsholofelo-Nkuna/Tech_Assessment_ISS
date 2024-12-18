@@ -26,7 +26,7 @@ namespace Core.Presentation.ViewComponents.Components
 
         public async Task OnDelete(Guid id)
         {
-            var response = await this.AppApi.GetAsync($"api/{this.ViewModel.DeleteController}/{this.ViewModel.DeleteAction}/{id}");
+            var response = await this.AppApi.DeleteAsync($"api/{this.ViewModel.DeleteController}/{this.ViewModel.DeleteAction}/{id}");
             if (response.IsSuccessStatusCode)
             {
                 OnDeleteClick?.Invoke(await response.Content.ReadFromJsonAsync<bool>());

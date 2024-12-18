@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.JSInterop;
-using Question3.BusinessLogicLayer;
-using Question3.BusinessLogicLayer.Interfaces;
+using ClientManagement.BusinessLogicLayer;
+using ClientManagement.BusinessLogicLayer.Interfaces;
 
 namespace ClientManagement.Presentation.Web.Components.Pages.Clients
 {

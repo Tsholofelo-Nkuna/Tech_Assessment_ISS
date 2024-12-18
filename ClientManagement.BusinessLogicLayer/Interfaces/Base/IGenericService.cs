@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Question3.BusinessLogicLayer.Interfaces.Base
+namespace ClientManagement.BusinessLogicLayer.Interfaces.Base
 {
     public interface IGenericService<TDto, TEntity> 
     {

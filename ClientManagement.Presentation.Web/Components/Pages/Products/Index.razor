@@ -13,6 +13,7 @@
       <TableComponent 
           ViewModel="ViewModel.ProductTableViewModel"
           OnNewClick="OnCreateNewProduct"
+          OnDeleteClick="OnDeleteProduct"
       >
 
       </TableComponent>
@@ -20,7 +21,10 @@
 </PageComponent>
 <ModalComponent ViewModel="ViewModel.NewProductModalViewModel">
     <Body>
-        <FormComponent ViewModel="ViewModel.NewProductFormViewModel">
+        <FormComponent 
+            ViewModel="ViewModel.NewProductFormViewModel"
+            OnFormSubmitClick="OnSaveNewProduct"
+        >
 
         </FormComponent>
     </Body>

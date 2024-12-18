@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Question3.BusinessLogicLayer.Interfaces.Base;
-using Question3.DataAccessLayer;
-using Question3.DataAccessLayer.Entities.Base;
+using ClientManagement.BusinessLogicLayer.Interfaces.Base;
+using ClientManagement.DataAccessLayer;
+using ClientManagement.DataAccessLayer.Entities.Base;
 using Core.Presentation.Models.DataTransferObjects.Base;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Question3.BusinessLogicLayer.Services.Base
+namespace ClientManagement.BusinessLogicLayer.Services.Base
 {
     public abstract class GenericService<TDto, TEntity> : IGenericService<TDto, TEntity> where TEntity : BaseEntity where TDto : BaseDto
     {
@@ -31,7 +31,7 @@ namespace Question3.BusinessLogicLayer.Services.Base
            var added = payload.Where(x => x.Id == Guid.Empty);
            var updated = payload.Where(x => x.Id != Guid.Empty);
            var hasUpdated = updated.Any() ? await this.Update(updated.ToList()) : true;
-           var hasAdded = added.Any() ? await this.Update(added.ToList()) : true;
+           var hasAdded = added.Any() ? await this.Insert(added.ToList()) : true;
            return hasUpdated && hasAdded;
         }
 

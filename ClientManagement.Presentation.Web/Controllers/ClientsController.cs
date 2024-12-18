@@ -1,7 +1,7 @@
 ﻿using Core.Presentation.Models.DataTransferObjects;
 
 using Microsoft.AspNetCore.Mvc;
-using Question3.BusinessLogicLayer.Interfaces;
+using ClientManagement.BusinessLogicLayer.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -56,7 +56,7 @@ namespace ClientManagement.Presentation.Web.Controllers
         }
 
         // DELETE api/Delete/5
-        [HttpGet("[action]/{id}")]
+        [HttpDelete("[action]/{id}")]
         public async Task<bool> Delete(Guid id)
         {
            return await _clientService.Delete(new[] { id });

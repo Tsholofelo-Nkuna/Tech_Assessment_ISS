@@ -6,7 +6,7 @@ using Core.Presentation.ViewComponents.Components.Base;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Question3.BusinessLogicLayer.Interfaces;
+using ClientManagement.BusinessLogicLayer.Interfaces;
 using System.Net.Http.Json;
 
 namespace ClientManagement.Presentation.Web.Components.Pages.Clients

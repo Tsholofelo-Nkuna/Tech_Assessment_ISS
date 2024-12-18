@@ -1,6 +1,7 @@
 ﻿using Core.Presentation.Models.Base;
 using Core.Presentation.Models.DataTransferObjects.Base;
 using Core.Presentation.Models.Models.DataTransferObjects;
+using Core.Presentation.Models.Validators.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,9 @@ namespace Core.Presentation.Models.Models
                         Index = nameof(ProductDto.Price),
                     }
                 },
-                ShowCreateNewButton = true
+                ShowCreateNewButton = true,
+                ShowArchiveButton = false,
+                ShowViewButton = false
             };
 
         public FormComponentViewModel<ProductDto> NewProductFormViewModel { get; set; } =
@@ -69,7 +72,10 @@ namespace Core.Presentation.Models.Models
             {
                 Fields = new List<InputFieldViewModel<ProductDto>>
                 {
-                    new InputFieldViewModel<ProductDto>(nameof(ProductDto.Name), "Name")
+                    new InputFieldViewModel<ProductDto>(
+                        nameof(ProductDto.Name), 
+                        "Name", 
+                        new ValidatorBase<ProductDto>(new []{ Validators.Validators.Required()}, nameof(ProductDto.Name)))
                     {
                         ControlType = ControlType.Input,
                         Type = "text",
@@ -79,7 +85,11 @@ namespace Core.Presentation.Models.Models
                         ControlType = ControlType.Input,
                         Type = "text"
                     },
-                      new InputFieldViewModel<ProductDto>(nameof(ProductDto.Price), "Price")
+                      new InputFieldViewModel<ProductDto>(
+                          nameof(ProductDto.Price), 
+                          "Price",
+                          new ValidatorBase<ProductDto>(new []{Validators.Validators.Required()}, nameof(ProductDto.Price))
+                          )
                     {
                         ControlType = ControlType.Input,
                         Type = "number"

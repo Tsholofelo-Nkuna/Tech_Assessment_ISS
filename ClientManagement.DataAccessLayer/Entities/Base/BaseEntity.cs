@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Question3.DataAccessLayer.Entities.Base
+namespace ClientManagement.DataAccessLayer.Entities.Base
 {
     public class BaseEntity
     {

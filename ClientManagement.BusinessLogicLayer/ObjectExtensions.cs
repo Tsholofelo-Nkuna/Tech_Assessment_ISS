@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Question3.BusinessLogicLayer
+namespace ClientManagement.BusinessLogicLayer
 {
     public static class ObjectExtensions
     {

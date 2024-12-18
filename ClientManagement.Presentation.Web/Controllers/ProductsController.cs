@@ -25,7 +25,7 @@ namespace ClientManagement.Presentation.Web.Controllers
         [HttpGet("{id}")]
         public async Task<ProductDto?> Get(Guid id)
         {
-            return  (await this._productService.Get(x => !x.Archived && x.Id == id )).FirstOrDefault();
+            return (await this._productService.Get(x => !x.Archived && x.Id == id)).FirstOrDefault();
         }
 
         // POST api/<ProductsController>
@@ -43,7 +43,7 @@ namespace ClientManagement.Presentation.Web.Controllers
         }
 
         // GET api/<ProductsController>/<Delete>/5
-        [HttpGet("[action]/{id}")]
+        [HttpDelete("[action]/{id}")]
         public async Task<bool> Delete(Guid id)
         {
             return await this._productService.Delete(new[] { id });

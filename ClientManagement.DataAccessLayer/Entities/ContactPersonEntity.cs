@@ -1,11 +1,11 @@
-﻿using Question3.DataAccessLayer.Entities.Base;
+﻿using ClientManagement.DataAccessLayer.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Question3.DataAccessLayer.Entities
+namespace ClientManagement.DataAccessLayer.Entities
 {
     public class ContactPersonEntity: BaseEntity
     {

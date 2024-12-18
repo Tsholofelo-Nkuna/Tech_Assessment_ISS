@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Question3.BusinessLogicLayer.Interfaces;
-using Question3.BusinessLogicLayer.Services.Base;
-using Question3.DataAccessLayer;
-using Question3.DataAccessLayer.Entities;
+using ClientManagement.BusinessLogicLayer.Interfaces;
+using ClientManagement.BusinessLogicLayer.Services.Base;
+using ClientManagement.DataAccessLayer;
+using ClientManagement.DataAccessLayer.Entities;
 using Core.Presentation.Models.DataTransferObjects;
 using System.Linq.Expressions;
 using System.IO.MemoryMappedFiles;
 
 
-namespace Question3.BusinessLogicLayer.Services
+namespace ClientManagement.BusinessLogicLayer.Services
 {
     public class ClientService : GenericService<ClientDto, ClientEntity>, IClientService
     {

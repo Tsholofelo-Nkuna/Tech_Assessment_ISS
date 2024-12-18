@@ -1,9 +1,9 @@
-﻿using Question3.BusinessLogicLayer.Interfaces.Base;
-using Question3.DataAccessLayer.Entities;
+﻿using ClientManagement.BusinessLogicLayer.Interfaces.Base;
+using ClientManagement.DataAccessLayer.Entities;
 using Core.Presentation.Models.DataTransferObjects;
 
 
-namespace Question3.BusinessLogicLayer.Interfaces
+namespace ClientManagement.BusinessLogicLayer.Interfaces
 {
     public interface IClientService : IGenericService<ClientDto, ClientEntity>
     {

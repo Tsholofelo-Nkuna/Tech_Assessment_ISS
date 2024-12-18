@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using ClientManagement.DataAccessLayer.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Question3.DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Question3.DataAccessLayer
+namespace ClientManagement.DataAccessLayer
 {
     public class WebDbContext : IdentityDbContext
     {
@@ -16,5 +16,6 @@ namespace Question3.DataAccessLayer
         public virtual DbSet<ClientEntity> Clients { get; set; }
 
         public virtual DbSet<ContactPersonEntity> Contacts { get; set; }
+        public virtual DbSet<ProductEntity> Products { get; set; }
     }
 }

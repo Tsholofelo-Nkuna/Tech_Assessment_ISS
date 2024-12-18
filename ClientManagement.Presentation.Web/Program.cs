@@ -1,7 +1,7 @@
 using ClientManagement.Presentation.Web.Components;
 using Microsoft.EntityFrameworkCore;
-using Question3.BusinessLogicLayer;
-using Question3.DataAccessLayer;
+using ClientManagement.BusinessLogicLayer;
+using ClientManagement.DataAccessLayer;
 
 namespace ClientManagement.Presentation.Web
 {

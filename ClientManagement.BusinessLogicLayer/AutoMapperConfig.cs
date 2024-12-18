@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Core.Presentation.Models.DataTransferObjects;
-using Question3.DataAccessLayer.Entities;
+using ClientManagement.DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Presentation.Models.Models.DataTransferObjects;
 
-namespace Question3.BusinessLogicLayer
+namespace ClientManagement.BusinessLogicLayer
 {
     internal class AutoMapperConfig : Profile
     {
@@ -17,6 +18,8 @@ namespace Question3.BusinessLogicLayer
                 .ReverseMap();
             this
                 .CreateMap<ContactPersonDto, ContactPersonEntity>()
+                .ReverseMap();
+            this.CreateMap<ProductDto, ProductEntity>()
                 .ReverseMap();
         }
     }
