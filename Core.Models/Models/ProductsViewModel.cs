@@ -28,11 +28,11 @@ namespace Core.Presentation.Models.Models
                 {
                     ControlType = ControlType.Input,
                     Type = "text", 
-                },
-                 new InputFieldViewModel<ProductDto>(nameof(ProductDto.Archived), "Show Archived Only")
-                {
-                    ControlType = ControlType.Checkbox,  
-                }
+                }//,
+                // new InputFieldViewModel<ProductDto>(nameof(ProductDto.Archived), "Show Archived Only")
+                //{
+                //    ControlType = ControlType.Checkbox,  
+                //}
             },
             ColClass = "col-4"
         };
