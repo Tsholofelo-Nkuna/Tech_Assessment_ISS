@@ -28,7 +28,7 @@ namespace Core.Utils.Logging
         {
             lock (FileLogger.Lock) { 
                 var filePath = $"{AppDomain.CurrentDomain.BaseDirectory}/{DateTime.Now:yyMMdd}.log";
-                File.AppendAllLines(filePath, new[] { $"{_category} says:", exception?.Message ?? string.Empty, formatter(state, exception) });
+                File.AppendAllLines(filePath, new[] { $"At {DateTime.Now:hh:mm tt} {_category} said:", exception?.Message ?? string.Empty, formatter(state, exception) });
             }
         }
     }
