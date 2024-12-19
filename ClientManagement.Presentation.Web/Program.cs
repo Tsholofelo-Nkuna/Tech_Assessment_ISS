@@ -2,6 +2,7 @@ using ClientManagement.Presentation.Web.Components;
 using Microsoft.EntityFrameworkCore;
 using ClientManagement.BusinessLogicLayer;
 using ClientManagement.DataAccessLayer;
+using Core.Utils.Logging;
 
 namespace ClientManagement.Presentation.Web
 {
@@ -10,12 +11,12 @@ namespace ClientManagement.Presentation.Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Logging.AddProvider(new FileLoggerProvider());
             // Add services to the container.
             builder.Services.AddDbContext<WebDbContext>(c => c.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
             builder.Services.AddHttpClient("AppApi",config =>
             {
-                config.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"]);
+                config.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"]); 
             });
             builder.Services.AddControllers();
             builder.Services.AddRazorComponents()

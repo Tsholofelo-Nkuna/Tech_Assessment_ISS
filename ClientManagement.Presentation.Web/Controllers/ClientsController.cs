@@ -2,6 +2,8 @@
 
 using Microsoft.AspNetCore.Mvc;
 using ClientManagement.BusinessLogicLayer.Interfaces;
+using ClientManagement.BusinessLogicLayer;
+using Core.Utils;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,26 +14,38 @@ namespace ClientManagement.Presentation.Web.Controllers
     public class ClientsController : ControllerBase
     {
         private readonly IClientService _clientService;
-
-        public ClientsController(IClientService clientService)
+        private readonly ILogger<ClientsController> _logger;
+        private readonly ControllerRequestHandler<ClientsController> _requestHandler;
+        public ClientsController(IClientService clientService, ILogger<ClientsController> logger)
         {
             _clientService = clientService;
+            _logger = logger;
+            _requestHandler = new ControllerRequestHandler<ClientsController>(_logger);
         }
 
 
 
         // GET: api/<ClientController>/Get
         [HttpPost("[action]")]
-        public async Task<IEnumerable<ClientDto>> Get(ClientDto filter)
+        public async Task<IEnumerable<ClientDto>?> Get(ClientDto filter)
         {
-            return await this._clientService.Get(filter);
+            var response = (await _requestHandler.HandleRequest(async () =>
+            {
+                return await this._clientService.Get(filter);
+            }, nameof(Get)));
+            return response;
+          
         }
 
         // GET api/<ClientController>/5
         [HttpGet("Get/{id}")]
         public async Task<ClientDto?> Get(Guid id)
         {
-            return  (await _clientService.Get(x => !x.Archived && x.Id == id)).FirstOrDefault();
+            return await this._requestHandler.HandleRequest(async () => (await _clientService.Get(x => !x.Archived && x.Id == id)).FirstOrDefault(),
+                 nameof(Get),
+                 id
+                );
+           
         }
 
         // GET api/<ClientController>/5
