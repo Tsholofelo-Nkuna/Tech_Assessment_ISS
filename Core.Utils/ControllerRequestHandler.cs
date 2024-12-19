@@ -14,7 +14,7 @@ namespace Core.Utils
 		public ControllerRequestHandler(ILogger<TCategory> logger) {
 		  this._logger = logger;
 		}	
-        public TOut? HandleRequest<TOut>(Func<TOut> requestHandler, string actionName , params object[] actionParameters)
+        public TOut HandleRequest<TOut>(Func<TOut> requestHandler, string actionName, TOut errorResponse , params object[] actionParameters)
         {
 			try
 			{
@@ -29,7 +29,7 @@ namespace Core.Utils
 			catch (Exception ex)
 			{
 				this._logger.LogError($"input(s) passed to {actionName} {actionParameters.ToJsonString()}");
-				return default;
+				return errorResponse;
 			}
         }
     }

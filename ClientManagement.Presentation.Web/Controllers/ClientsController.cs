@@ -24,15 +24,14 @@ namespace ClientManagement.Presentation.Web.Controllers
         }
 
 
-
         // GET: api/<ClientController>/Get
         [HttpPost("[action]")]
-        public async Task<IEnumerable<ClientDto>?> Get(ClientDto filter)
+        public async Task<IEnumerable<ClientDto>> Get(ClientDto filter)
         {
             var response = (await _requestHandler.HandleRequest(async () =>
             {
                 return await this._clientService.Get(filter);
-            }, nameof(Get)));
+            }, nameof(Get), Task.FromResult(Enumerable.Empty<ClientDto>()) ));
             return response;
           
         }
@@ -43,6 +42,7 @@ namespace ClientManagement.Presentation.Web.Controllers
         {
             return await this._requestHandler.HandleRequest(async () => (await _clientService.Get(x => !x.Archived && x.Id == id)).FirstOrDefault(),
                  nameof(Get),
+                 Task.FromResult<ClientDto?>(null),
                  id
                 );
            
@@ -52,28 +52,44 @@ namespace ClientManagement.Presentation.Web.Controllers
         [HttpGet("GetByArchive/{id}")]
         public async Task<ClientDto?> Get(Guid id,[FromQuery] bool archived)
         {
-            return  (await _clientService.Get( new ClientDto { Id = id, Archived= archived})).FirstOrDefault();
+            return await this._requestHandler.HandleRequest(
+                async () => (await _clientService.Get(new ClientDto { Id = id, Archived = archived })).FirstOrDefault(),
+                nameof(Get),
+                Task.FromResult<ClientDto?>(null),
+                id, archived
+                );
         }
 
         // POST api/<ClientController>
         [HttpPost]
         public async Task<bool> Post(ClientDto value)
         {
-            return await this._clientService.AddOrUpdate(value);
+            return await this._requestHandler.HandleRequest( async () => await this._clientService.AddOrUpdate(value),
+                nameof(Post),
+                Task.FromResult<bool>(false),
+                value
+                );
         }
 
         // GET api/Archive/5
         [HttpGet("[action]/{id}")]
         public async Task<bool> Archive(Guid id)
         {
-          return  await this._clientService.Archive(new[] { id });
+            return await this._requestHandler.HandleRequest( async() => await this._clientService.Archive(new[] {id}),
+                nameof(Archive),
+                Task.FromResult<bool>(false),
+                id
+                );
         }
 
         // DELETE api/Delete/5
         [HttpDelete("[action]/{id}")]
         public async Task<bool> Delete(Guid id)
         {
-           return await _clientService.Delete(new[] { id });
+            return await this._requestHandler.HandleRequest(async () => await _clientService.Delete(new[] { id }),
+                nameof(Delete),
+                Task.FromResult<bool>(false), id
+                );
         }
     }
 }
