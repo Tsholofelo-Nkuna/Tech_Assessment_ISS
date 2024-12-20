@@ -18,25 +18,7 @@ namespace Core.Presentation.ViewComponents.Components
 
         [Parameter]
         public Action<KeyValuePair<string, string>?>? OnValidationFail { get; set; }
-        public bool IsValid { 
-            get
-            {
-                var result = Enumerable.Empty<KeyValuePair<string, string>?>();
-                foreach(var rec in this.ViewModel.ViewModelState)
-                {
-                    foreach(var fieldConfig in this.ViewModel.Fields)
-                    {
-                        if (fieldConfig.Validator is not null)
-                        {
-                            result.Append(fieldConfig.Validator.Validate(rec));
-                        }
-                        
-                    }
-                    
-                }
-                return result.All(x => x == null);  
-            }
-        }
+        public bool IsValid => this.ViewModel.IsValid;
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -54,7 +36,7 @@ namespace Core.Presentation.ViewComponents.Components
         public void OnInputChange(Guid id, InputFieldViewModel<TRecord> field, object? value)
         {
             ViewModel.Set(id, field.Name, value);
-            this.ViewModel.IsValid = this.IsValid;
+            
            if(field.Validator is not null)
             {
                 var validationResult = field.Validator.Validate(this.ViewModel?.ViewModelState?.FirstOrDefault());
@@ -80,7 +62,7 @@ namespace Core.Presentation.ViewComponents.Components
 
         public Task OnFormSubmit()
         {
-            this.ViewModel.IsValid = this.IsValid;  
+            
             OnFormSubmitClick?.Invoke(this.ViewModel.ViewModelState);
             return Task.CompletedTask;
         }

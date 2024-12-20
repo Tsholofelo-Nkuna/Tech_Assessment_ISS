@@ -5,5 +5,6 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients.State.Index
     public class IndexState
     {
         public ClientDto? NewClientToBeAdded { get; set; }
+        public bool NewClientFormIsValid { get; set; }
     }
 }

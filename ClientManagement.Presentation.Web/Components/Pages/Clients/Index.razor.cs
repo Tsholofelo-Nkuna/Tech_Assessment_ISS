@@ -4,12 +4,6 @@ using Core.Presentation.Models.DataTransferObjects;
 using Core.Presentation.ViewComponents.Components;
 using Core.Presentation.ViewComponents.Components.Base;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.JSInterop;
-using ClientManagement.BusinessLogicLayer;
-using ClientManagement.BusinessLogicLayer.Interfaces;
 
 namespace ClientManagement.Presentation.Web.Components.Pages.Clients
 {
@@ -25,8 +19,11 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
         {
           
             await base.OnInitializedAsync();
-            this.BaseUrl = "api/clients"; 
-            if(this.StateManager.Get<ClientDto?>(nameof(IndexState.NewClientToBeAdded)) is ClientDto clientToAdd)
+            this.BaseUrl = "api/clients";
+            var newClientIsValid = this.StateManager.Get<bool>(nameof(IndexState.NewClientFormIsValid));
+            var newlyAddedClient = this.StateManager.Get<ClientDto?>(nameof(IndexState.NewClientToBeAdded));
+            if (newlyAddedClient is ClientDto clientToAdd 
+                && newClientIsValid)
             {
                 var added =  await AddNewClient(clientToAdd);
                 if (added)
@@ -37,6 +34,15 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
                 {
                     //Display error message
                 }
+            } else if (newlyAddedClient is ClientDto c
+                && ! newClientIsValid)
+            {
+                this.ViewModel.NewClientFormViewModel.ViewModelState = new[] {c};
+                this.ViewModel.PrimaryContactFormViewModel.ViewModelState = new[] { c };
+                this.ViewModel.ModalViewModel.Show = true;
+                this.ViewModel.NewClientFormViewModel.WasValidated = true;
+                this.ViewModel.PrimaryContactFormViewModel.WasValidated = true;
+              
             }
             this.GetData(this.SearchFormFilters);
 
@@ -73,14 +79,23 @@ namespace ClientManagement.Presentation.Web.Components.Pages.Clients
         {
            
             
-            if (details is ClientDto newC && primaryContact is ClientDto contactInfo 
-                && this.ViewModel.PrimaryContactFormViewModel.IsValid 
-                && this.ViewModel.NewClientFormViewModel.IsValid)
+            if (details is ClientDto newC && primaryContact is ClientDto contactInfo)
             {
                 newC.PrimaryContactName = contactInfo.PrimaryContactName;
                 newC.PrimaryContactPhone = contactInfo.PrimaryContactPhone;
                 newC.PrimaryContactEmail = contactInfo.PrimaryContactEmail;
                 this.StateManager.Set(nameof(IndexState.NewClientToBeAdded), newC);
+              
+            }
+            var contactFormIsValid = this.ViewModel.PrimaryContactFormViewModel.IsValid;
+            var detailsFormIsValid = this.ViewModel.NewClientFormViewModel.IsValid;
+            if (contactFormIsValid && detailsFormIsValid)
+            {
+                this.StateManager.Set(nameof(IndexState.NewClientFormIsValid), true);
+            }
+            else
+            {
+                this.StateManager.Set(nameof(IndexState.NewClientFormIsValid), false);
             }
            
         }
